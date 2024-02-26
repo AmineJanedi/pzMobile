@@ -19,7 +19,7 @@ const EnfantScannéBuvette = () => {
   const handleChercherProduit = async () => {
     try {
       // Appel de l'API de recherche de produit avec le nom saisi par l'utilisateur
-      const response = await axios.get(`http://192.168.1.5:4000/Produit/chercherProduit/${chercher}`);
+      const response = await axios.get(`http://192.168.1.4:4000/Produit/chercherProduit/${chercher}`);
       // Si le produit est trouvé, mettre à jour l'état du produit trouvé
       setProduitTrouve(response.data);
     } catch (error) {
@@ -33,7 +33,7 @@ const EnfantScannéBuvette = () => {
   useEffect(() => {
     const fetchProduits = async () => {
       try {
-        const response = await axios.get('http://192.168.1.5:4000/Produit/getNomEtPrix');
+        const response = await axios.get('http://192.168.1.4:4000/Produit/getNomEtPrix');
         setProduits(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des produits :', error);

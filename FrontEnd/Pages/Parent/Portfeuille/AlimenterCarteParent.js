@@ -26,13 +26,13 @@ const AlimenterCarteParent = () => {
       />
       <Pressable
         style={styles.component2499}
-        onPress={() => navigation.navigate("DashboardLemon")}
+        onPress={() => navigation.navigate("DashboardParent")}
       >
         <View style={[styles.component2499Child, styles.textPosition]} />
         <Image
           style={[styles.unionIcon, styles.iconLayout1]}
           contentFit="cover"
-          source={require("../../../assets/union4.png")}
+          source={require("../../../assets/union3.png")}
         />
       </Pressable>
       <View
@@ -43,10 +43,9 @@ const AlimenterCarteParent = () => {
       <Text style={[styles.dt, styles.dtLayout]}>500 DT</Text>
       <View style={[styles.rectangleView, styles.rectangleViewPosition]} />
       <Text style={[styles.virementBancaire, styles.sweatCoinTypo]}>
-        Virement bancaire
+        Carte bancaire
       </Text>
-      <Text style={[styles.sweatCoin, styles.sweatCoinTypo]}>Sweat Coin</Text>
-      <Text style={[styles.codeCoupon, styles.sweatCoinTypo]}>Code coupon</Text>
+     
       <Image
         style={[styles.component78Icon, styles.iconLayout]}
         contentFit="cover"
@@ -263,10 +262,12 @@ const styles = StyleSheet.create({
   },
   alimenterCarteParentInner: {
     top: 254,
-    borderRadius: Border.br_lgi,
-    backgroundColor: Color.colorDarkcyan_100,
+    borderRadius:25,
+    backgroundColor: "#2D8F95",
     width: 324,
     height: 81,
+    left: 26,
+    position: "absolute",
   },
   budget: {
     top: 268,
@@ -318,14 +319,9 @@ const styles = StyleSheet.create({
     height: 185,
   },
   virementBancaire: {
-    top: "52.22%",
+    top: "69.22%",
   },
-  sweatCoin: {
-    top: "57.14%",
-  },
-  codeCoupon: {
-    top: "62.68%",
-  },
+ 
   component78Icon: {
     top: 421,
   },

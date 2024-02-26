@@ -195,13 +195,12 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     color: Color.colorWhite,
     display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
     letterSpacing: 1.1,
     fontSize: FontSize.size_lg,
     fontWeight: "600",
     height: "100%",
-    textAlign: "center",
+    right:"-200%",
+    top:"50%"
   },
   button: {
     top: 656,

@@ -1,8 +1,10 @@
-import * as React from "react";
-import { StyleSheet, View, Text, Pressable } from "react-native";
+import React, { useState } from 'react';
+import { StyleSheet, View, Text, Pressable,TextInput,ScrollView} from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontSize, FontFamily, Border } from "../../../GlobalStyles";
+import { Camera } from 'expo-camera';
+
 
 const AjouterEnfant = () => {
   const navigation = useNavigation();
@@ -10,32 +12,18 @@ const AjouterEnfant = () => {
   const [NomEcole, setNomEcole] = useState('');
   const [cordonnéesGPS, setCordonnéesGPS] = useState('');
   const [IDBracelet, setIDBracelet] = useState('');
+  const [isCameraVisible, setIsCameraVisible] = useState(false);
 
 
 
   return (
+    <ScrollView>
     <View style={styles.ajouterEnfant}>
-      <View style={styles.component2498}>
-        <View style={[styles.component2498Child, styles.buttonChildPosition]} />
-        <Image
-          style={[styles.unionIcon, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union1.png")}
-        />
-      </View>
+      
       <Pressable
         style={styles.button}
-        onPress={() => navigation.navigate("Registration")}
-      >
-        <View style={[styles.buttonChild, styles.buttonChildBg]} />
-        <Pressable
-          style={styles.signIn}
-          onPress={() => navigation.navigate("DashboardParent")}
-        >
-          <Text style={[styles.rythmeCardiaque, styles.registerFlexBox]}>
-            Rythme Cardiaque
-          </Text>
-        </Pressable>
+        onPress={() => navigation.navigate("DashboardParent")}
+      >       
       </Pressable>
       <Image
         style={styles.shapeIcon}
@@ -50,17 +38,10 @@ const AjouterEnfant = () => {
         <Image
           style={[styles.unionIcon1, styles.unionIconLayout]}
           contentFit="cover"
-          source={require("../../../assets/union4.png")}
+          source={require("../../../assets/union3.png")}
         />
       </Pressable>
-      <View style={[styles.component2500, styles.componentLayout]}>
-        <View style={[styles.component2498Child, styles.buttonChildPosition]} />
-        <Image
-          style={[styles.unionIcon2, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union5.png")}
-        />
-      </View>
+     {/*Bouton ajouter */}
       <Pressable
         style={[styles.button1, styles.button1Layout]}
         onPress={() => navigation.navigate("DashboardParent")}
@@ -104,16 +85,8 @@ const AjouterEnfant = () => {
         style={[styles.entrerVotreEmail, styles.textTypo]}
       />
       </View>
-      <Image
-        style={[styles.vectorIcon, styles.vectorIconPosition]}
-        contentFit="cover"
-        source={require("../../../assets/icon.png")}
-      />
-      <Image
-        style={[styles.vectorIcon1, styles.vectorIconPosition]}
-        contentFit="cover"
-        source={require("../../../assets/icon.png")}
-      />
+     
+     
       <Text style={[styles.associer, styles.associerTypo]}>Associer</Text>
       <Text style={[styles.ajouterEnfant1, styles.registerTypo]}>
         Ajouter enfant
@@ -128,22 +101,30 @@ const AjouterEnfant = () => {
         <Image
           style={[styles.unionIcon3, styles.unionIconLayout]}
           contentFit="cover"
-          source={require("../../../assets/union.png")}
+          source={require("../../../assets/imageP.png")}
         />
       </View>
+      {/*Scanner le bracelet */}
       <Pressable
-        style={[styles.ajouterEnfantChild, styles.buttonChildBg]}
-        onPress={() => navigation.navigate("AjouterAllrgie")}
-      />
-      <Text style={[styles.scannerLeBraclet, styles.associerTypo]}>
-        Scanner le braclet
-      </Text>
+  style={[styles.ajouterEnfantChild, styles.buttonChildBg]}
+  onPress={() => setIsCameraVisible(true)}
+/>
+{isCameraVisible && (
+  <Camera style={styles.camera} type={Camera.Constants.Type.back}>
+    <View style={{ flex: 1, backgroundColor: 'transparent', flexDirection: 'row' }} />
+  </Camera>
+)}
+
+<Text style={[styles.scannerLeBraclet, styles.associerTypo]}>
+  Scanner le bracelet
+</Text>
+
       <Image
         style={styles.plusCircleIcon}
         contentFit="cover"
         source={require("../../../assets/pluscircle.png")}
       />
-    </View>
+    </View></ScrollView>
   );
 };
 
@@ -151,6 +132,10 @@ const styles = StyleSheet.create({
   buttonChildPosition: {
     left: "0%",
     top: "0%",
+  },
+   camera: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   unionIconLayout: {
     maxHeight: "100%",
@@ -280,7 +265,7 @@ const styles = StyleSheet.create({
   shapeIcon: {
     top: -64,
     left: -83,
-    width: 182,
+    width: 200,
     height: 182,
     position: "absolute",
   },
@@ -468,7 +453,7 @@ const styles = StyleSheet.create({
     top: 443,
     left: 54,
     width: 224,
-    height: 10,
+    height: 50,
     color: Color.colorWhite,
     fontFamily: FontFamily.playRegular,
     lineHeight: 17,

@@ -10,6 +10,7 @@ const DashboardParent = () => {
   return (
     <ScrollView>
     <View style={styles.dashboardParent}>
+      {/*Partie supérieure */}
       <View style={styles.dashboardParentChild} />
       <View style={[styles.component2499, styles.component2499Layout]}>
         <View style={styles.component2499Child} />
@@ -17,6 +18,11 @@ const DashboardParent = () => {
           style={[styles.unionIcon, styles.unionIconLayout]}
           contentFit="cover"
           source={require("../../../assets/union6.png")}
+        />
+         <Image
+          style={styles.alert}
+          contentFit="cover"
+          source={require("../../../assets/alert.png")}
         />
       </View>
       <Image
@@ -30,67 +36,11 @@ const DashboardParent = () => {
         contentFit="cover"
         source={require("../../../assets/ellipse-11.png")}
       />
+
       <Text style={[styles.bonjourLinda, styles.bonjourLindaClr]}>
         Bonjour , Linda said
       </Text>
-      <Text style={[styles.famille, styles.syndaClr]}>Famille</Text>
-      <Text style={[styles.activit, styles.syndaClr]}>Activité</Text>
-      <View style={styles.dashboardParentInner} />
-      <Text style={[styles.touteLaFamille, styles.syndaTypo]}>
-        Toute la famille
-      </Text>
-      <View
-        style={[styles.syndaAAchetUnSandwitchThWrapper, styles.syndaLayout]}
-      >
-        <Text style={[styles.syndaAAchet, styles.syndaLayout]}>
-          Synda a acheté un sandwitch thon
-        </Text>
-      </View>
-      <View style={[styles.amineAEssayeDacheterUnPWrapper, styles.amineLayout]}>
-        <Text
-          style={[styles.amineAEssaye, styles.amineLayout]}
-        >{`Amine a essayeé
-d’acheter un produit interdit`}</Text>
-      </View>
-      <View style={[styles.syndaWrapper, styles.syndaWrapperLayout]}>
-        <Text style={[styles.synda, styles.syndaTypo]}>Synda</Text>
-      </View>
-      <View style={[styles.amineWrapper, styles.syndaWrapperLayout]}>
-        <Text style={[styles.synda, styles.syndaTypo]}>Amine</Text>
-      </View>
-      <View
-        style={[
-          styles.amineAAchetDesBiscuitsParent,
-          styles.touteLaFamillePosition,
-        ]}
-      >
-        <Text style={[styles.amineAAchet, styles.syndaTypo]}>
-          Amine a acheté des biscuits
-        </Text>
-        <View style={[styles.groupChild, styles.groupLayout]} />
-        <View style={[styles.groupItem, styles.groupLayout]} />
-      </View>
-      <View style={[styles.syndaAPass37Wrapper, styles.syndaWrapperLayout]}>
-        <Text style={[styles.synda, styles.syndaTypo]}>
-          Synda a passé 37° !
-        </Text>
-      </View>
-      <View
-        style={[
-          styles.amineEstEnDehorDeLcoleWrapper,
-          styles.syndaWrapperLayout,
-        ]}
-      >
-        <Text style={[styles.synda, styles.syndaTypo]}>
-          Amine est en dehor de l’école !
-        </Text>
-      </View>
-      <Image
-        style={[styles.plusCircleIcon, styles.component2499Layout]}
-        contentFit="cover"
-        source={require("../../../assets/pluscircle.png")}
-      />
-      <View style={styles.rectangleView} />
+      {/*Budget familiale */}
       <View style={styles.dashboardParentChild1} />
       <Text style={[styles.budgetFamiliale, styles.dtLayout]}>
         Budget familiale
@@ -99,37 +49,56 @@ d’acheter un produit interdit`}</Text>
       <Text style={[styles.ecolePrivAl, styles.dtPosition]}>
         Ecole privé al yassmine,La Marsa
       </Text>
-      <Pressable
-        style={[styles.rectanglePressable, styles.rectanglePressableLayout]}
-        onPress={() => navigation.navigate("DashboardFille")}
-      />
-      <Pressable
-        style={[styles.dashboardParentChild2, styles.rectanglePressableLayout]}
-        onPress={() => navigation.navigate("DashboardLemon")}
-      />
+     
       <View style={[styles.component754, styles.component754Position]}>
         <View style={styles.component2499Child} />
         <Pressable  style={[styles.unionIcon1, styles.unionIconLayout]}
-                onPress={() => navigation.navigate("MéthodeBancaireParent")}
+                onPress={() => navigation.navigate("AlimenterCarteParent")}
                 >
         <Image
           style={[styles.unionIcon1, styles.unionIconLayout]}
           contentFit="cover"
-          source={require("../../../assets/union8.png")}
+          source={require("../../../assets/union7.png")}
 
         />
         </Pressable>
       </View>
+      {/*Famille */}
+      <Text style={[styles.famille, styles.syndaClr]}>Famille</Text>
+    
+      <Image
+        style={[styles.plusCircleIcon, styles.component2499Layout]}
+        contentFit="cover"
+        source={require("../../../assets/pluscircle.png")}
+      />
+        <Pressable
+              style={[styles.plusCircleIcon, styles.component2499Layout]}
+
+        onPress={() => navigation.navigate("AjouterEnfant")}
+      >
+</Pressable>
+       <Pressable
+        style={[styles.rectanglePressable, styles.rectanglePressableLayout]}
+      />
+      <Pressable
+        style={[styles.dashboardParentChild2, styles.rectanglePressableLayout]}
+        onPress={() => navigation.navigate("DashboardEnfant")}
+      />
+       <View style={[styles.syndaWrapper, styles.syndaWrapperLayout]}>
+        <Text style={[styles.synda, styles.syndaTypo]}>Synda</Text>
+      </View>
+      <View style={[styles.amineWrapper, styles.syndaWrapperLayout]}>
+        <Text style={[styles.synda, styles.syndaTypo]}>Amine</Text>
+      </View>
+      {/*Activité */}
+      <Text style={[styles.activit, styles.syndaClr]}>Activité</Text>
+      <View style={styles.dashboardParentInner} />
+      <Text style={[styles.touteLaFamille, styles.syndaTypo]}>
+        Toute la famille
+      </Text>
+
       <Text style={[styles.aujourdhui, styles.syndaTypo]}>Aujourd’hui</Text>
-      <View
-        style={[styles.dashboardParentChild3, styles.dashboardParentBorder]}
-      />
-      <View
-        style={[styles.dashboardParentChild4, styles.dashboardParentBorder]}
-      />
-      <View
-        style={[styles.dashboardParentChild5, styles.dashboardParentBorder]}
-      />
+      
     </View>
     </ScrollView>
 
@@ -170,7 +139,6 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     letterSpacing: 0.7,
     fontSize: FontSize.size_xs,
-    fontFamily: FontFamily.poppins,
   },
   syndaLayout: {
     width: 232,
@@ -258,6 +226,11 @@ const styles = StyleSheet.create({
     bottom: "13.33%",
     left: "12.92%",
   },
+  alert:{
+    height: "100%",
+    width: "74.17%",
+    top: "480.5%",
+  },
   component2499: {
     top: 67,
     left: 342,
@@ -286,7 +259,6 @@ const styles = StyleSheet.create({
     color: Color.colorBlack,
     textAlign: "left",
     fontWeight: "600",
-    fontFamily: FontFamily.poppins,
     left: "0%",
     top: "0%",
     position: "absolute",
@@ -312,7 +284,6 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_lg,
     color: Color.colorWhite,
     left: 80,
-    fontFamily: FontFamily.poppins,
     fontWeight: "600",
     position: "absolute",
   },
@@ -323,7 +294,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     letterSpacing: 1.1,
     fontSize: FontSize.size_lg,
-    fontFamily: FontFamily.poppins,
     fontWeight: "600",
     position: "absolute",
   },
@@ -334,7 +304,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     letterSpacing: 1.1,
     fontSize: FontSize.size_lg,
-    fontFamily: FontFamily.poppins,
     fontWeight: "600",
     position: "absolute",
   },
@@ -368,7 +337,6 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     letterSpacing: 0.7,
     fontSize: FontSize.size_xs,
-    fontFamily: FontFamily.poppins,
     color: Color.colorGray_100,
     textAlign: "left",
     left: 0,
@@ -382,7 +350,6 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     letterSpacing: 0.7,
     fontSize: FontSize.size_xs,
-    fontFamily: FontFamily.poppins,
     color: Color.colorGray_100,
     textAlign: "left",
     left: 0,
@@ -472,7 +439,6 @@ const styles = StyleSheet.create({
   },
   budgetFamiliale: {
     left: 46,
-    fontFamily: FontFamily.play,
     width: 114,
     top: 260,
     position: "absolute",
@@ -482,7 +448,6 @@ const styles = StyleSheet.create({
   },
   dt: {
     top: 257,
-    fontFamily: FontFamily.portLligatSans,
     height: 18,
     lineHeight: 17,
     letterSpacing: 0.9,
@@ -496,7 +461,6 @@ const styles = StyleSheet.create({
     lineHeight: 10,
     width: 95,
     height: 21,
-    fontFamily: FontFamily.poppins,
     left: 220,
   },
   rectanglePressable: {
@@ -511,12 +475,8 @@ const styles = StyleSheet.create({
     left: 133,
   },
   unionIcon1: {
-    height: "58.06%",
-    width: "58.39%",
-    top: "20.97%",
-    right: "20.65%",
-    bottom: "20.97%",
-    left: "20.97%",
+    height: "100%",
+    width: "100%",
   },
   component754: {
     left: 315,

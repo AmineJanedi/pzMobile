@@ -13,13 +13,11 @@ const AjouterUnProduitBuvette = () => {
   const ajouterProduit = async () => {
     try {
       // Appel de l'API d'ajout de produit avec les données saisies par l'utilisateur
-      const response = await axios.post('http://192.168.1.2:4000/ProduitAjoutéBuvette/ajouterProduit', {
+      const response = await axios.post('http://192.168.1.4:4000/ProduitBuvette/AjouterProduitBuvette', {
         NomProduit: nomProduit,
         Prix: prix
       });
-      
-      // Affichage d'une alerte pour indiquer que le produit a été ajouté avec succès
-      Alert.alert('Produit ajouté', 'Le produit a été ajouté avec succès !');
+            Alert.alert('Produit ajouté', 'La demande d\'ajouter ce produit est en cours de traitement !');
 
       // Réinitialisation des champs après l'ajout du produit
       setNomProduit('');

@@ -5,7 +5,7 @@ const ProduitAjoutéBuvette = mongoose.model('ProduitAjoutéBuvette',{
         type:String
     },
     Prix :{
-        type:Number
+        type:String
     }
 })
 module.exports=ProduitAjoutéBuvette;

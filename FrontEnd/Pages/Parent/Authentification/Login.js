@@ -94,7 +94,6 @@ const styles = StyleSheet.create({
   },
   textTypo: {
     textAlign: "left",
-    fontFamily: FontFamily.poppins,
     position: "absolute",
   },
   signIn1Typo1: {
@@ -104,7 +103,6 @@ const styles = StyleSheet.create({
   },
   signIn1Typo: {
     textAlign: "center",
-    fontFamily: FontFamily.poppins,
   },
   childPosition: {
     left: "0%",
@@ -159,7 +157,6 @@ const styles = StyleSheet.create({
     color: Color.colorBlack,
     fontWeight: "600",
     textAlign: "left",
-    fontFamily: FontFamily.poppins,
     letterSpacing: 0.8,
     fontSize: FontSize.size_smi,
     left: "0%",
@@ -175,7 +172,6 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     color: Color.colorGray_100,
     textAlign: "left",
-    fontFamily: FontFamily.poppins,
     position: "absolute",
   },
   motDePasse: {
@@ -198,14 +194,13 @@ const styles = StyleSheet.create({
     width: "99.69%",
     lineHeight: 25,
     color: Color.colorWhite,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
     letterSpacing: 1.1,
     fontSize: FontSize.size_lg,
     fontWeight: "600",
     height: "100%",
     textAlign: "center",
+    right:"-200%",
+    top:"50%"
   },
   button: {
     top: 656,
@@ -227,7 +222,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
     fontSize: FontSize.size_smi,
     textAlign: "left",
-    fontFamily: FontFamily.poppins,
   },
   input: {
     top: 468,

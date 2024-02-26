@@ -11,7 +11,7 @@ const DashboardBuvette = () => {
 
   useEffect(() => {
     // Effectuer une requête GET à l'API GetAllProduits
-    axios.get('http://192.168.1.5:4000/Produit/getNomEtPrix')
+    axios.get('http://192.168.1.4:4000/Produit/getNomEtPrix')
       .then(response => {
         // Mettre à jour l'état local avec les données des produits reçues
         setProduits(response.data);
@@ -24,7 +24,11 @@ const DashboardBuvette = () => {
     <ScrollView>
     <View style={styles.dashboardBuvette}>
       {/*Dashboard partie supérieure */}
-     
+      <Image
+          style={{top:"50%"}}
+          contentFit="cover"
+          source={require("../../../assets/alert.png")}
+        />
       <View style={[styles.dashboardBuvetteChild, styles.id18192088Position]} />
       <Pressable
         style={[styles.component832, styles.componentLayout]}
@@ -130,6 +134,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
+  
   scrollView: {
     flexDirection: 'row',
   },

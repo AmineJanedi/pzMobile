@@ -13,7 +13,7 @@ const ListeProduitBuvette = () => {
   useEffect(() => {
     const fetchProduits = async () => {
       try {
-        const response = await axios.get('http://192.168.1.5:4000/Produit/getNomEtPrix');
+        const response = await axios.get('http://192.168.1.4:4000/Produit/getNomEtPrix');
         setProduits(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des produits :', error);
@@ -22,7 +22,23 @@ const ListeProduitBuvette = () => {
 
     fetchProduits();
   }, []);
-
+  const handleChercherProduit = async (text) => {
+    try {
+      const response = await axios.get(`http://192.168.1.4:4000/Produit/chercherProduit/${text}`);
+      console.log(response.data) 
+      if (response.data && Array.isArray(response.data)) {
+        // Mise à jour de l'état produits avec les nouveaux produits trouvés
+        setProduits(response.data.map(produit => ({ nom: produit.NomProduit, prix: produit.Prix })));
+      } else {
+        console.error("La réponse de l'API n'est pas correctement formatée.");
+      }
+    } catch (error) {
+      console.error('Erreur lors de la recherche des produits :', error);
+    }
+  };
+  
+  
+  
   return (
     <ScrollView>
     <View style={styles.listeProduit}>
@@ -82,6 +98,7 @@ const ListeProduitBuvette = () => {
       />
       <Text
         style={[styles.ajouterDesProduits, styles.bonjourNourredinClr]}
+        onPress={() => navigation.navigate("AjouterUnProduitBuvette")}
       >{`Ajouter des produits `}</Text>
     </View>
     </ScrollView>
