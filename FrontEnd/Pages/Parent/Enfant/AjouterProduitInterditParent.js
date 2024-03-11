@@ -1,291 +1,199 @@
-import * as React from "react";
-import { Text, StyleSheet, View, Pressable } from "react-native";
+import { StyleSheet, View, Text,  Button,Alert ,ScrollView,TextInput,Pressable} from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
-import { Color, FontSize, FontFamily, Border } from "../../../GlobalStyles";
+import { FontFamily, Color, FontSize, Border } from "../../../GlobalStyles";
+import { useState,useEffect } from 'react';
+import axios from 'axios';
+import { RadioButton,Checkbox } from 'react-native-paper';
+
 
 const AjouterProduitInterditParent = () => {
   const navigation = useNavigation();
+  const [Chercher, setchercher] = useState('');
+  const [selectedProduit, setSelectedProduit] = useState([]);
+  const [produits, setProduits] = useState([]);
+  const [chercher, setChercher] = useState('');
+  const [produitTrouve, setProduitTrouve] = useState(null);
 
+  const handleChercherProduit = async () => {
+    try {
+      // Appel de l'API de recherche de produit avec le nom saisi par l'utilisateur
+      const response = await axios.get(`http://192.168.1.4:4000/Produit/chercherProduit/${chercher}`);
+      // Si le produit est trouvé, mettre à jour l'état du produit trouvé
+      setProduitTrouve(response.data);
+    } catch (error) {
+      // En cas d'erreur, afficher une alerte avec le message d'erreur
+    }
+  };
+  const handleCategoryChange = (value) => {
+    setSelectedProduit(value);
+  };
+  useEffect(() => {
+    const fetchProduits = async () => {
+      try {
+        const response = await axios.get('http://192.168.1.4:4000/Produit/getNomEtPrix');
+        setProduits(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des produits :', error);
+      }
+    };
+    fetchProduits();
+  }, []);
+  const ajouterProduitsInterdits = async () => {
+    try {
+      // Vérifiez s'il y a des produits sélectionnés
+      if (selectedProduit.length === 0) {
+        console.error("Aucun produit sélectionné.");
+        return;
+      }
+
+      // Envoyez les données des produits sélectionnés à l'API
+      const response = await axios.post('http://192.168.1.4:4000/ProduitInterdit/AjouterProduitsInterdits', { produitsSelectionnes: selectedProduit });
+      
+      // Vérifiez si la requête a réussi
+      if (response.status === 200) {
+        console.log("Produits interdits ajoutés avec succès :", response.data);
+        // Réinitialisez l'état des produits sélectionnés après l'ajout
+        setSelectedProduit([]);
+      } else {
+        console.error("Erreur lors de l'ajout des produits interdits :", response.statusText);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout des produits interdits :", error);
+    }
+  };
+  
   return (
-    <View style={styles.grerProduitInterdit}>
-      <View style={styles.amineWrapper}>
-        <Text style={[styles.amine, styles.amineTypo]}>Amine</Text>
-      </View>
-      <View style={styles.component2498}>
-        <View style={[styles.component2498Child, styles.text4Position]} />
-        <Image
-          style={[styles.unionIcon, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union.png")}
-        />
-      </View>
-      <Text style={[styles.pasALcole, styles.amClr]}>PAS A l’école</Text>
-      <Text style={[styles.am, styles.amTypo]}>9:30 AM</Text>
-      <Text style={[styles.ecolePrivAl, styles.budgetPosition]}>
-        Ecole privé al yassmine,La Marsa
-      </Text>
-      <Image
-        style={styles.image3Icon}
-        contentFit="cover"
-        source={require("../../../assets/image-3.png")}
-      />
-      <View style={styles.component2143}>
-        <View style={[styles.component2498Child, styles.text4Position]} />
-        <Image
-          style={[styles.unionIcon1, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union1.png")}
-        />
-      </View>
-      <View
-        style={[
-          styles.grerProduitInterditChild,
-          styles.rectanglePressableBorder,
-        ]}
-      />
-      <View style={styles.component2499}>
-        <View style={[styles.component2498Child, styles.text4Position]} />
-        <Image
-          style={[styles.unionIcon2, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union3.png")}
-        />
-      </View>
-      <Text style={styles.dt}>41,5 DT</Text>
-      <Text style={[styles.budget, styles.budgetTypo]}>Budget</Text>
+    <ScrollView>
+    <View style={styles.aprsScannerEnfant}>      
       <Image
         style={styles.shapeIcon}
         contentFit="cover"
-        source={require("../../../assets/shape2.png")}
+        source={require(".../../../assets/shape1.png")}
       />
-      <View style={styles.component24991}>
-        <View style={[styles.component2498Child, styles.text4Position]} />
-        <Image
-          style={[styles.unionIcon3, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union4.png")}
-        />
+{/* Ajouter des produit intérdit*/}
+<View
+        style={styles.rectanglePressable}/>
+      <Text style={[styles.enfantScann, styles.produitsClr]}>
+      Ajouter des produit intérdit
+      </Text>
+      <View style={[styles.aprsScannerEnfantChild4, styles.aprsChildLayout]} />
+      <Image
+        style={[styles.image2Icon, styles.buttonPosition]}
+        contentFit="cover"
+        source={require(".../../../assets/image-3.png")}
+      />
+      <View style={styles.amineWrapper}>
+        <Text style={[styles.amine, styles.sandwitchTypo]}>Amine</Text>
       </View>
-      <Text style={[styles.lesProduitInterdits, styles.text4Typo]}>
-        Les produit interdits
-      </Text>
-      <View style={[styles.grerProduitInterditItem, styles.grerShadowBox]} />
-      <Image
-        style={[styles.plusCircleIcon, styles.plusIconLayout]}
-        contentFit="cover"
-        source={require("../../../assets/pluscircle1.png")}
-      />
-      <Text style={[styles.nomProduit, styles.idTypo]}>Nom produit :</Text>
-      <Text style={[styles.danupFraise, styles.textTypo]}>Danup Fraise</Text>
-      <Text style={[styles.text, styles.textTypo]}>122</Text>
-      <Text style={[styles.id, styles.idTypo]}>ID</Text>
-      <View style={[styles.grerProduitInterditInner, styles.grerShadowBox]} />
-      <Image
-        style={[styles.plusCircleIcon1, styles.plusIconLayout]}
-        contentFit="cover"
-        source={require("../../../assets/pluscircle1.png")}
-      />
-      <Text style={[styles.nomProduit1, styles.id1Typo]}>Nom produit :</Text>
-      <Text style={[styles.chocotomFraise, styles.text1Typo]}>
-        Chocotom Fraise
-      </Text>
-      <Text style={[styles.text1, styles.text1Typo]}>201</Text>
-      <Text style={[styles.id1, styles.id1Typo]}>ID</Text>
-      <View style={[styles.rectangleView, styles.grerShadowBox]} />
-      <Image
-        style={[styles.plusCircleIcon2, styles.plusIconLayout]}
-        contentFit="cover"
-        source={require("../../../assets/pluscircle1.png")}
-      />
-      <Text style={[styles.nomProduit2, styles.id2Typo]}>Nom produit :</Text>
-      <Text style={[styles.cakeFraise, styles.text2Typo]}>Cake fraise</Text>
-      <Text style={[styles.text2, styles.text2Typo]}>305</Text>
-      <Text style={[styles.id2, styles.id2Typo]}>ID</Text>
-      <View style={[styles.grerProduitInterditChild1, styles.grerShadowBox]} />
-      <Image
-        style={[styles.plusCircleIcon3, styles.plusIconLayout]}
-        contentFit="cover"
-        source={require("../../../assets/pluscircle1.png")}
-      />
-      <Text style={[styles.nomProduit3, styles.id3Typo]}>Nom produit :</Text>
-      <Text style={[styles.tarteFraise, styles.text3Typo]}>Tarte fraise</Text>
-      <Text style={[styles.text3, styles.text3Typo]}>509</Text>
-      <Text style={[styles.id3, styles.id3Typo]}>ID</Text>
-      <Pressable
-        style={[styles.rectanglePressable, styles.rectanglePressableBorder]}
-        onPress={() => navigation.navigate("AjouterAllrgie")}
-      />
-      <Text style={[styles.ajouterDesProduits, styles.budgetTypo]}>
-        Ajouter des produits interdit
-      </Text>
-      <Image
-        style={[styles.plusCircleIcon4, styles.plusIconLayout]}
-        contentFit="cover"
-        source={require("../../../assets/pluscircle.png")}
-      />
-      <View style={styles.grerProduitInterditChild2} />
-     
+      <View style={[styles.bracletId13122024Wrapper, styles.wrapperPosition]}>
+        <Text style={[styles.bracletIdContainer, styles.sandwitchTypo]}>
+          <Text style={styles.textTypo}>Braclet ID</Text>
+          <Text style={styles.ID}>Test</Text>
+        </Text>
+      </View>
+      <View style={[styles.budget5DtWrapper, styles.wrapperPosition]}>
+        <Text style={[styles.bracletIdContainer, styles.sandwitchTypo]}>
+          <Text style={styles.textTypo}>Budget</Text>
+          <Text style={styles.Budget}>Test</Text>
+        </Text>
+      </View>
+      <View style={[styles.produitsInterditsWrapper, styles.wrapperPosition]}>
+        <Text style={[styles.produitsInterdits, styles.registerFlexBox]}>
+          20 Produits Interdits
+        </Text>
+      </View>
+
+      {/*Produits */}
+      <View style={[styles.aprsScannerEnfantInner, styles.checkboxContainer]}>
+  <Text style={[styles.toutesLesProduits, styles.sandwitchTypo]}>
+    Toutes les produits
+  </Text>
+  <View style={styles.chercherWrapper}>
+    <TextInput 
+      placeholder="Chercher un produit"
+      onChangeText={(text) => {
+        setChercher(text);
+        handleChercherProduit(text); // Appel de la fonction de recherche à chaque fois que le texte change
+      }}
+      value={chercher}
+      style={styles.entrerVotreEmail}
+    />
+  </View>
+  <ScrollView>
+    {produits.filter((produit) => produit.NomProduit.toLowerCase().includes(chercher.toLowerCase()))
+      .map((produit, index) => (
+        <Checkbox.Item
+          key={index}
+          label={`${produit.NomProduit} (${produit.Prix} DT)`}
+          status={selectedProduit.includes(produit.NomProduit) ? 'checked' : 'unchecked'}
+          onPress={() => {
+            const selected = [...selectedProduit];
+            if (selected.includes(produit.NomProduit)) {
+              selected.splice(selected.indexOf(produit.NomProduit), 1);
+            } else {
+              selected.push(produit.NomProduit);
+            }
+            setSelectedProduit(selected);
+          }}
+        />
+      ))}
+  </ScrollView>
+</View>
+
+
     </View>
+    
+      {/*Bouton */}
+      <View style={[styles.button, styles.buttonPosition]}>
+        <View style={[styles.buttonChild, styles.childPosition]} />
+        <Pressable
+        onPress={ajouterProduitsInterdits}
+        style={[styles.register, styles.registerFlexBox]}
+      >
+        <Text style={[styles.register, styles.registerFlexBox]}>Ajouter</Text>
+    </Pressable>
+    </View></ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  amineTypo: {
-    textAlign: "left",
-    color: Color.colorGray_300,
-    lineHeight: 21,
-    fontSize: FontSize.size_lg,
-    position: "absolute",
+  container: {
+    alignItems: 'flex-start', // Alignement des éléments à gauche
+    justifyContent: 'center',
   },
-  text4Position: {
+  checkboxContainer :{
+    display:'flex',
+    flexDirection:'column',/* Assurez-vous que les cases à cocher sont alignées verticalement */
+    top:390,
+    left:45,
+    width:"70%"
+  },
+  checkboxItem :{
+    display:'flex',
+    alignItems:'center',/* Centrez les éléments horizontalement */
+    marginBottom: 10 /* Espacement entre chaque case à cocher */
+  },
+  produit: {
+    flexDirection: 'row', // Disposition en ligne pour le bouton radio et le texte
+    alignItems: 'center', // Alignement vertical des éléments
+    marginBottom: 20, // Marge inférieure pour séparer les produits
+    
+  },
+  produitText: {
+    marginLeft: 0, // Marge à gauche pour espacer le texte du bouton radio
+  },
+  sandwitchPosition: {
+    left: 0,
+    top: 0,
+  },
+  produit: {
+    left:70,
+    top:74
+  },
+  childPosition: {
     left: "0%",
     top: "0%",
-  },
-  unionIconLayout: {
-    maxHeight: "100%",
-    maxWidth: "100%",
-    position: "absolute",
-    overflow: "hidden",
-  },
-  amClr: {
-    color: Color.colorBlack,
-    lineHeight: 9,
-    fontSize: FontSize.size_5xs,
-    top: 112,
-  },
-  amTypo: {
-    height: 7,
-    fontFamily: FontFamily.poppinsRegular,
-    letterSpacing: 0.5,
-    textAlign: "left",
-    position: "absolute",
-  },
-  budgetPosition: {
-    left: 140,
-    color: Color.colorBlack,
-  },
-  rectanglePressableBorder: {
-    borderWidth: 1,
-    borderColor: Color.colorMediumturquoise_100,
-    borderStyle: "solid",
-    backgroundColor: Color.colorMediumturquoise_200,
-    position: "absolute",
-  },
-  budgetTypo: {
-    fontFamily: FontFamily.playRegular,
-    lineHeight: 17,
-    letterSpacing: 0.9,
-    fontSize: FontSize.size_mini,
-    textAlign: "left",
-    position: "absolute",
-  },
-  text4Typo: {
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
-  },
-  grerShadowBox: {
-    height: 67,
-    width: 313,
-    shadowOpacity: 1,
-    elevation: 15,
-    shadowRadius: 15,
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowColor: "rgba(0, 0, 0, 0.25)",
-    backgroundColor: Color.colorWhite,
-    borderRadius: Border.br_5xl,
-    left: 26,
-    position: "absolute",
-  },
-  plusIconLayout: {
-    height: 22,
-    width: 22,
-    position: "absolute",
-    overflow: "hidden",
-  },
-  idTypo: {
-    lineHeight: 14,
-    letterSpacing: 0.7,
-    fontSize: FontSize.size_xs,
-    top: 283,
-    color: Color.colorBlack,
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
-    textAlign: "left",
-    position: "absolute",
-  },
-  textTypo: {
-    lineHeight: 15,
-    letterSpacing: 0.8,
-    fontSize: FontSize.size_smi,
-    color: Color.colorBlack,
-    textAlign: "left",
-    position: "absolute",
-  },
-  id1Typo: {
-    top: 373,
-    lineHeight: 14,
-    letterSpacing: 0.7,
-    fontSize: FontSize.size_xs,
-    color: Color.colorBlack,
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
-    textAlign: "left",
-    position: "absolute",
-  },
-  text1Typo: {
-    top: 393,
-    lineHeight: 15,
-    letterSpacing: 0.8,
-    fontSize: FontSize.size_smi,
-    fontFamily: FontFamily.poppinsRegular,
-    color: Color.colorBlack,
-    textAlign: "left",
-    position: "absolute",
-  },
-  id2Typo: {
-    top: 463,
-    lineHeight: 14,
-    letterSpacing: 0.7,
-    fontSize: FontSize.size_xs,
-    color: Color.colorBlack,
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
-    textAlign: "left",
-    position: "absolute",
-  },
-  text2Typo: {
-    top: 483,
-    lineHeight: 15,
-    letterSpacing: 0.8,
-    fontSize: FontSize.size_smi,
-    fontFamily: FontFamily.poppinsRegular,
-    color: Color.colorBlack,
-    textAlign: "left",
-    position: "absolute",
-  },
-  id3Typo: {
-    top: 553,
-    lineHeight: 14,
-    letterSpacing: 0.7,
-    fontSize: FontSize.size_xs,
-    color: Color.colorBlack,
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
-    textAlign: "left",
-    position: "absolute",
-  },
-  text3Typo: {
-    top: 573,
-    lineHeight: 15,
-    letterSpacing: 0.8,
-    fontSize: FontSize.size_smi,
-    fontFamily: FontFamily.poppinsRegular,
-    color: Color.colorBlack,
-    textAlign: "left",
     position: "absolute",
   },
   iconLayout: {
@@ -298,290 +206,117 @@ const styles = StyleSheet.create({
     position: "absolute",
     overflow: "hidden",
   },
-  amine: {
-    top: 0,
-    left: 0,
-    letterSpacing: 2.2,
-    fontWeight: "700",
-    fontFamily: FontFamily.poppinsBold,
+  textTypo: {
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
   },
-  amineWrapper: {
-    top: 79,
-    left: 134,
-    width: 70,
-    height: 21,
+  registerTypo: {
+    color: Color.colorWhite,
+    letterSpacing: 1.1,
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
+  },
+  produitsClr: {
+    color: Color.colorGray_300,
+    textAlign: "left",
+  },
+  sandwitchTypo: {
+    lineHeight: 14,
+    letterSpacing: 0.7,
+    fontSize: FontSize.size_xs,
+    color: Color.colorGray_300,
+    textAlign: "left",
+  },
+  dtPosition: {
+    left: 220,
+    color: Color.colorWhite,
     position: "absolute",
   },
-  component2498Child: {
+  chercherTypo: {
+    letterSpacing: 0.5,
+    fontFamily: FontFamily.poppinsRegular,
+    textAlign: "left",
+  },
+  aprsChildLayout: {
+    width: 17,
+    borderColor: Color.colorBlack,
+    borderRadius: Border.br_31xl,
+    left: 53,
+    height: 17,
+    borderWidth: 1,
+    borderStyle: "solid",
+    position: "absolute",
+  },
+  chercherParentLayout: {
+    height: 15,
+    position: "absolute",
+  },
+  parentLayout: {
+    width: 120,
+    left: 197,
+  },
+  id201ParentPosition: {
+    top: 420,
+    height: 15,
+    position: "absolute",
+  },
+  sandwitchLayout: {
+    width: 100,
+    height: 15,
+    position: "absolute",
+  },
+  buttonPosition: {
+    left: 43,
+    position: "absolute",
+  },
+  wrapperPosition: {
+    left: 129,
+    position: "absolute",
+  },
+  registerFlexBox: {
+    alignItems: "center",
+    display: "flex",
+    position: "absolute",
+  },
+  aprsScannerEnfantChild: {
+    width: 375,
+    height: 233,
+    backgroundColor: Color.colorMediumturquoise_200,
+    position: "absolute",
+  },
+  component2499Child: {
     bottom: "0%",
-    height: "100%",
     left: "0%",
     right: "0%",
     top: "0%",
-    position: "absolute",
+    height: "100%",
     width: "100%",
   },
   unionIcon: {
-    height: "66.11%",
-    width: "66.67%",
-    top: "16.11%",
-    right: "16.67%",
-    bottom: "17.78%",
-    left: "16.67%",
-  },
-  component2498: {
-    left: 122,
-    width: 18,
-    height: 18,
-    top: 107,
+    height: "74.17%",
+    width: "74.17%",
+    top: "12.5%",
+    right: "12.92%",
+    bottom: "13.33%",
+    left: "12.92%",
+    maxHeight: "100%",
+    maxWidth: "100%",
     position: "absolute",
-  },
-  pasALcole: {
-    left: 142,
-    width: 72,
-    height: 11,
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
-    letterSpacing: 0.5,
-    lineHeight: 9,
-    fontSize: FontSize.size_5xs,
-    top: 112,
-    textAlign: "left",
-    position: "absolute",
-  },
-  am: {
-    left: 227,
-    width: 40,
-    color: Color.colorBlack,
-    lineHeight: 9,
-    fontSize: FontSize.size_5xs,
-    top: 112,
-    height: 7,
-    fontFamily: FontFamily.poppinsRegular,
-  },
-  ecolePrivAl: {
-    top: 127,
-    fontSize: FontSize.size_4xs,
-    lineHeight: 10,
-    width: 199,
-    height: 7,
-    fontFamily: FontFamily.poppinsRegular,
-    letterSpacing: 0.5,
-    textAlign: "left",
-    position: "absolute",
-  },
-  image3Icon: {
-    top: 68,
-    left: 35,
-    borderRadius: Border.br_21xl_5,
-    width: 81,
-    height: 84,
-    position: "absolute",
-  },
-  unionIcon1: {
-    height: "58.42%",
-    width: "58.42%",
-    top: "21.05%",
-    right: "21.05%",
-    bottom: "20.53%",
-    left: "20.53%",
-  },
-  component2143: {
-    left: 262,
-    width: 19,
-    height: 19,
-    top: 107,
-    position: "absolute",
-  },
-  grerProduitInterditChild: {
-    left: 203,
-    width: 75,
-    top: 147,
-    height: 21,
-  },
-  unionIcon2: {
-    height: "58%",
-    width: "58.5%",
-    top: "21%",
-    right: "20.5%",
-    bottom: "21%",
-    left: "21%",
+    overflow: "hidden",
   },
   component2499: {
-    top: 148,
-    left: 257,
-    width: 20,
-    height: 20,
+    top: 67,
+    left: 342,
+    width: 24,
+    height: 24,
     position: "absolute",
-  },
-  dt: {
-    top: 149,
-    left: 206,
-    fontFamily: FontFamily.portLligatSansRegular,
-    width: 92,
-    color: Color.colorWhite,
-    lineHeight: 17,
-    letterSpacing: 0.9,
-    fontSize: FontSize.size_mini,
-    height: 18,
-    textAlign: "left",
-    position: "absolute",
-  },
-  budget: {
-    width: 161,
-    height: 17,
-    top: 147,
-    left: 140,
-    color: Color.colorBlack,
   },
   shapeIcon: {
-    top: -64,
-    left: -83,
-    width: 182,
-    height: 182,
-    position: "absolute",
-  },
-  unionIcon3: {
-    height: "66.55%",
-    width: "66.55%",
-    top: "16.55%",
-    right: "16.9%",
-    bottom: "16.9%",
-    left: "16.55%",
-  },
-  component24991: {
-    top: 37,
-    left: 13,
-    width: 29,
-    height: 29,
-    position: "absolute",
-  },
-  lesProduitInterdits: {
-    top: 227,
-    left: 44,
-    letterSpacing: 1.1,
-    textAlign: "left",
-    color: Color.colorGray_300,
-    lineHeight: 21,
-    fontSize: FontSize.size_lg,
-    position: "absolute",
-  },
-  grerProduitInterditItem: {
-    top: 268,
-  },
-  plusCircleIcon: {
-    top: 290,
-    left: 306,
-    height: 22,
-    width: 22,
-  },
-  nomProduit: {
-    left: 45,
-  },
-  danupFraise: {
-    top: 303,
-    letterSpacing: 0.8,
-    fontSize: FontSize.size_smi,
-    fontFamily: FontFamily.poppinsRegular,
-    left: 45,
-  },
-  text: {
-    left: 256,
-    top: 303,
-    letterSpacing: 0.8,
-    fontSize: FontSize.size_smi,
-    fontFamily: FontFamily.poppinsRegular,
-  },
-  id: {
-    left: 255,
-  },
-  grerProduitInterditInner: {
-    top: 358,
-  },
-  plusCircleIcon1: {
-    top: 380,
-    left: 306,
-    height: 22,
-    width: 22,
-  },
-  nomProduit1: {
-    left: 45,
-  },
-  chocotomFraise: {
-    left: 45,
-  },
-  text1: {
-    left: 256,
-  },
-  id1: {
-    left: 255,
-  },
-  rectangleView: {
-    top: 448,
-  },
-  plusCircleIcon2: {
-    top: 470,
-    left: 306,
-    height: 22,
-    width: 22,
-  },
-  nomProduit2: {
-    left: 45,
-  },
-  cakeFraise: {
-    left: 45,
-  },
-  text2: {
-    left: 256,
-  },
-  id2: {
-    left: 255,
-  },
-  grerProduitInterditChild1: {
-    top: 538,
-  },
-  plusCircleIcon3: {
-    top: 560,
-    left: 306,
-    height: 22,
-    width: 22,
-  },
-  nomProduit3: {
-    left: 45,
-  },
-  tarteFraise: {
-    left: 45,
-  },
-  text3: {
-    left: 255,
-  },
-  id3: {
-    left: 254,
-  },
-  rectanglePressable: {
-    top: 643,
-    left: 29,
-    width: 305,
-    height: 35,
-  },
-  ajouterDesProduits: {
-    top: 649,
-    left: 57,
-    width: 224,
-    height: 10,
-    color: Color.colorWhite,
-  },
-  plusCircleIcon4: {
-    top: 648,
-    left: 302,
-  },
-  grerProduitInterditChild2: {
-    top: 338,
-    left: 357,
-    borderRadius: Border.br_81xl,
-    backgroundColor: Color.colorGainsboro,
-    width: 3,
-    height: 90,
+    top: -109,
+    left: -99,
+    width: 290,
+    height: 270,
     position: "absolute",
   },
   wifiIcon: {
@@ -597,22 +332,348 @@ const styles = StyleSheet.create({
     right: "0%",
     width: "4.53%",
   },
-  text4: {
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
+  text: {
+    fontSize: FontSize.size_smi,
+    letterSpacing: 0.8,
+    lineHeight: 15,
+    color: Color.colorBlack,
+    textAlign: "left",
     left: "0%",
     top: "0%",
-    letterSpacing: 0.8,
-    fontSize: FontSize.size_smi,
+    position: "absolute",
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
   },
-  notification: {
-    top: 15,
-    left: 25,
-    width: 325,
-    height: 16,
+ 
+  aprsScannerEnfantItem: {
+    top: 70,
+    left: 264,
+    height: 91,
+    width: 92,
     position: "absolute",
   },
-  grerProduitInterdit: {
+ 
+  enfantScann: {
+    top: 180,
+    left: 27,
+    color: Color.colorGray_300,
+    lineHeight: 21,
+    letterSpacing: 1.1,
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
+    position: "absolute",
+  },
+  produits: {
+    top: 400,
+    left: 50,
+    color: Color.colorGray_300,
+    lineHeight: 21,
+    letterSpacing: 1.1,
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
+    position: "absolute",
+  },
+  aprsScannerEnfantInner: {
+    top: 360,
+    borderRadius: Border.br_5xl,
+    shadowColor: "rgba(0, 0, 0, 0.25)",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowRadius: 15,
+    elevation: 15,
+    shadowOpacity: 1,
+    width: 323,
+    height: "40%",
+    backgroundColor: Color.colorWhite,
+    left: 31,
+    position: "flex",
+  },
+  toutesLesProduits: {
+    top:-25,
+    left: 20,
+    fontFamily: FontFamily.poppinsRegular,
+    position: "absolute",
+  },
+  rectangleView: {
+    top: 598,
+    left: 327,
+    borderRadius: Border.br_81xl,
+    backgroundColor: Color.colorGainsboro,
+    width: 3,
+    height: 90,
+    position: "absolute",
+  },
+  aprsScannerEnfantChild1: {
+    top: 248,
+    borderColor: Color.colorMediumturquoise_100,
+    width: 326,
+    height: 59,
+    borderWidth: 1,
+    borderStyle: "solid",
+    left: 25,
+    backgroundColor: Color.colorMediumturquoise_200,
+    position: "absolute",
+  },
+  caisse: {
+    left: 46,
+    fontSize: FontSize.size_mid,
+    letterSpacing: 1,
+    lineHeight: 20,
+    fontFamily: FontFamily.playRegular,
+    width: 114,
+    height: 17,
+    top: 260,
+    color: Color.colorWhite,
+    textAlign: "left",
+    position: "absolute",
+  },
+  dt: {
+    top: 257,
+    fontSize: FontSize.size_mini,
+    letterSpacing: 0.9,
+    lineHeight: 17,
+    fontFamily: FontFamily.portLligatSansRegular,
+    height: 18,
+    width: 92,
+    textAlign: "left",
+  },
+  ecolePrivAl: {
+    top: 277,
+    fontSize: FontSize.size_4xs,
+    lineHeight: 10,
+    width: 95,
+    height: 21,
+    left: 220,
+    color: Color.colorWhite,
+    position: "absolute",
+  },
+  rectanglePressable: {
+    top: 220,
+    borderColor: Color.colorCadetblue,
+    borderWidth: 0.5,
+    width: 87,
+    height: 95,
+    borderStyle: "solid",
+    left: 31,
+    position: "absolute",
+  },
+  aprsScannerEnfantChild2: {
+    top: 577,
+    backgroundColor: Color.colorMediumturquoise_200,
+  },
+  sandwitchThon: {
+    width: 104,
+    fontFamily: FontFamily.poppinsRegular,
+    lineHeight: 14,
+    letterSpacing: 0.7,
+    fontSize: FontSize.size_xs,
+    color: Color.colorGray_300,
+    textAlign: "left",
+    left: 0,
+    top: 0,
+  },
+  sandwitchThonWrapper: {
+    width: 104,
+    top: 612,
+    height: 15,
+    left: 80,
+  },
+  id101: {
+    width: 39,
+    fontFamily: FontFamily.poppinsRegular,
+    lineHeight: 14,
+    letterSpacing: 0.7,
+    fontSize: FontSize.size_xs,
+    color: Color.colorGray_300,
+    textAlign: "left",
+    left: 0,
+    top: 0,
+  },
+  prix3dt: {
+    left: 58,
+    width: 62,
+    fontFamily: FontFamily.poppinsRegular,
+    lineHeight: 14,
+    letterSpacing: 0.7,
+    fontSize: FontSize.size_xs,
+    color: Color.colorGray_300,
+    textAlign: "left",
+    top: 0,
+    height: 15,
+  },
+  id101Parent: {
+    height: 15,
+    position: "absolute",
+    top: 612,
+  },
+  chocotomWrapper: {
+    width: 10,
+    left: 80,
+  },
+  id201Parent: {
+    width: 120,
+    left: 197,
+  },
+  aprsScannerEnfantChild3: {
+    top: 611,
+    backgroundColor: Color.colorWhite,
+  },
+  sandwitchSalami: {
+    fontFamily: FontFamily.poppinsRegular,
+    lineHeight: 14,
+    letterSpacing: 0.7,
+    fontSize: FontSize.size_xs,
+    color: Color.colorGray_300,
+    textAlign: "left",
+    left: 0,
+    top: 0,
+  },
+  sandwitchSalamiWrapper: {
+    top: 642,
+    left: 80,
+  },
+  id108Parent: {
+    top: 652,
+    height: 15,
+    position: "absolute",
+  },
+  aprsScannerEnfantChild4: {
+    top: 651,
+    backgroundColor: Color.colorWhite,
+  },
+  icon: {
+    height: "100%",
+    width: "100%",
+  },
+  component697: {
+    left: 315,
+    width: 31,
+    height: 31,
+    top: 260,
+    position: "absolute",
+  },
+  image2Icon: {
+    top: 225,
+    borderRadius: Border.br_11xl_5,
+    width: 61,
+    height: 60,
+  },
+  amine: {
+    fontFamily: FontFamily.poppinsRegular,
+    left: 0,
+    top: 0,
+    position: "absolute",
+  },
+  amineWrapper: {
+    top: 290,
+    width: 42,
+    height: 14,
+    left: 53,
+    position: "absolute",
+  },
+  text1: {
+    fontFamily: FontFamily.poppinsRegular,
+  },
+  bracletIdContainer: {
+    left: 0,
+    top: 0,
+    position: "absolute",
+  },
+  bracletId13122024Wrapper: {
+    top: 225,
+    width: 133,
+    height: 14,
+  },
+  budget5DtWrapper: {
+    top: 250,
+    width: 88,
+    height: 14,
+  },
+  ID:{
+    top: 270,
+    width: 88,
+    height: 14,
+  },
+  Budget:{
+    top: 270,
+    width: 88,
+    height: 14,
+  },
+  produitsInterdits: {
+    fontSize: FontSize.size_3xs,
+    letterSpacing: 0.6,
+    lineHeight: 12,
+    width: 115,
+    fontFamily: FontFamily.poppinsRegular,
+    color: Color.colorGray_300,
+    textAlign: "left",
+    left: 0,
+    top: 0,
+  },
+  produitsInterditsWrapper: {
+    top: 278,
+    height: 12,
+    width: 115,
+  },
+  buttonChild: {
+    bottom: "0%",
+    left: "0%",
+    right: "0%",
+    top: "0%",
+    height: "100%",
+    width: "100%",
+    backgroundColor: Color.colorMediumturquoise_200,
+  },
+  register: {
+    width: "99.7%",
+    lineHeight: 25,
+    textAlign: "center",
+    justifyContent: "center",
+    color: Color.colorWhite,
+    letterSpacing: 1.1,
+    fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.poppinsSemiBold,
+    fontWeight: "600",
+    display: "flex",
+    left: "0%",
+    top: "0%",
+    height: "100%",
+  },
+  button: {
+    top: 748,
+    width: 304,
+    height: 48,
+  },
+  aprsScannerEnfantChild5: {
+    top: 370,
+    left: 230,
+    borderRadius: 25,
+    width: 105,
+    height: 20,
+    backgroundColor: Color.colorMediumturquoise_200,
+    position: "absolute",
+  },
+  chercher: {
+    fontSize: FontSize.size_5xs,
+    lineHeight: 9,
+    color: "rgba(255, 255, 255, 0.75)",
+    width: 104,
+    letterSpacing: 0.5,
+    fontFamily: FontFamily.poppinsRegular,
+    textAlign: "left",
+    left: 0,
+    top: 0,
+  },
+  chercherWrapper: {
+    top: -26,
+    left: 160,
+    width: "50%",
+  },
+  aprsScannerEnfant: {
     backgroundColor: Color.colorWhitesmoke,
     flex: 1,
     height: 812,

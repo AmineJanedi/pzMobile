@@ -27,8 +27,18 @@ import DpenseParJour from "./FrontEnd/Pages/Parent/Enfant/DpenseParJour";
 import ModifierEnfant from "./FrontEnd/Pages/Parent/Enfant/ModifierEnfant";
 import AlimenterCarteParent from "./FrontEnd/Pages/Parent/Portfeuille/AlimenterCarteParent";
 import MéthodeBancaireParent from "./FrontEnd/Pages/Parent/Portfeuille/MéthodeBancaireParent";
-
-
+import MéthodeCoupons from "./FrontEnd/Pages/Parent/Portfeuille/MéthodeCoupons";
+import DetailParJour from "./FrontEnd/Pages/Parent/Enfant/DetailParJour";
+import GererProduitInterdit from "./FrontEnd/Pages/Parent/Enfant/GererProduitInterdit";
+import AssocierUneNouvelleBracelet from "./FrontEnd/Pages/Parent/Enfant/AssocierUneNouvelleBracelet";
+import ComptePremium from "./FrontEnd/Pages/Parent/Authentification/ComptePremium";
+import ModifierPageBuvette from "./FrontEnd/Pages/Buvette/Dashboard/ModifierPageBuvette";
+import TransactionBloqueEnfant from "./FrontEnd/Pages/Buvette/EnfantScanné/TransactionBloqueEnfant";
+import CommanderBracelet from "./FrontEnd/Pages/Parent/Dashboard/CommanderBracelet";
+import AlimenterCompteEnfant from "./FrontEnd/Pages/Parent/Enfant/AlimenterCompteEnfant";
+import ModifierCompteParent from "./FrontEnd/Pages/Parent/Dashboard/ModifierCompteParent";
+import AutreAllergie from "./FrontEnd/Pages/Parent/Enfant/AutreAllergies";
+import AjouterNouvelleAllergie from "./FrontEnd/Pages/Parent/Enfant/AjouterNouvelleAllergie";
 const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
 
@@ -40,6 +50,67 @@ const App = () => {
               <Stack.Screen
               name="FirstPage"
               component={FirstPage}
+              options={{ headerShown: true }}
+            />
+              <Stack.Screen
+              name="AssocierUneNouvelleBracelet"
+              component={AssocierUneNouvelleBracelet}
+              options={{ headerShown: true }}
+            /> 
+              <Stack.Screen
+              name="AutreAllergie"
+              component={AutreAllergie}
+              options={{ headerShown: true }}
+            /> 
+             <Stack.Screen
+              name="AjouterNouvelleAllergie"
+              component={AjouterNouvelleAllergie}
+              options={{ headerShown: true }}
+            /> 
+             <Stack.Screen
+              name="ModifierCompteParent"
+              component={ModifierCompteParent}
+              options={{ headerShown: true }}
+            /> 
+             <Stack.Screen
+              name="CommanderBracelet"
+              component={CommanderBracelet}
+              options={{ headerShown: true }}
+            /> 
+             <Stack.Screen
+              name="AlimenterCompteEnfant"
+              component={AlimenterCompteEnfant}
+              options={{ headerShown: true }}
+            /> 
+         
+              <Stack.Screen
+              name="ModifierPageBuvette"
+              component={ModifierPageBuvette}
+              options={{ headerShown: true }}
+            />
+              <Stack.Screen
+              name="TransactionBloqueEnfant"
+              component={TransactionBloqueEnfant}
+              options={{ headerShown: true }}
+            />
+             <Stack.Screen
+              name="ComptePremium"
+              component={ComptePremium}
+              options={{ headerShown: true }}
+            />
+              <Stack.Screen
+              name="GererProduitInterdit"
+              component={GererProduitInterdit}
+              options={{ headerShown: true }}
+            />
+              <Stack.Screen
+              name="MéthodeCoupons"
+              component={MéthodeCoupons}
+              options={{ headerShown: true }}
+            />
+             <Stack.Screen
+              name="DetailParJour"
+              component={DetailParJour}
               options={{ headerShown: true }}
             />
              <Stack.Screen

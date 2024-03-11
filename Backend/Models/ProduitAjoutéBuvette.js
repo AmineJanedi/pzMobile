@@ -1,6 +1,9 @@
 const mongoose =require ('mongoose');
 
 const ProduitAjoutéBuvette = mongoose.model('ProduitAjoutéBuvette',{
+    ID:{
+        type:Number
+    },
     NomProduit :{
         type:String
     },

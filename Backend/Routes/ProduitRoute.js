@@ -6,7 +6,7 @@ const Produits = require('../Models/Produits');
 router.get('/getNomEtPrix', async (req, res) => {
     try {
         // Récupérer uniquement les champs NomProduit et Prix de la table Produits
-        const produits = await Produits.find({}, 'NomProduit Prix');
+        const produits = await Produits.find({}, 'ID NomProduit Prix');
         res.status(200).json(produits);
     } catch (err) {
         console.error('Erreur lors de la récupération du NomProduit et du Prix :', err);

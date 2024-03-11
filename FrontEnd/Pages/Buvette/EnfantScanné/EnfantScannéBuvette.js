@@ -24,7 +24,6 @@ const EnfantScannéBuvette = () => {
       setProduitTrouve(response.data);
     } catch (error) {
       // En cas d'erreur, afficher une alerte avec le message d'erreur
-      Alert.alert('Erreur', 'Une erreur est survenue lors de la recherche du produit : ' + error.message);
     }
   };
   const handleCategoryChange = (value) => {
@@ -100,24 +99,43 @@ const EnfantScannéBuvette = () => {
     />
   </View>
   <ScrollView>
-    {produits.map((produit, index) => (
+    {/* Conditionally render Checkbox.Item based on the found product */}
+    {produitTrouve ? (
       <Checkbox.Item
-        key={index}
-        label={`${produit.NomProduit} (${produit.Prix} DT)`}
-        status={selectedProduit.includes(produit.NomProduit) ? 'checked' : 'unchecked'}
+        key={produitTrouve.ID}
+        label={`${produitTrouve.NomProduit} (${produitTrouve.Prix} DT)`}
+        status={selectedProduit.includes(produitTrouve.NomProduit) ? 'checked' : 'unchecked'}
         onPress={() => {
           const selected = [...selectedProduit];
-          if (selected.includes(produit.NomProduit)) {
-            selected.splice(selected.indexOf(produit.NomProduit), 1);
+          if (selected.includes(produitTrouve.NomProduit)) {
+            selected.splice(selected.indexOf(produitTrouve.NomProduit), 1);
           } else {
-            selected.push(produit.NomProduit);
+            selected.push(produitTrouve.NomProduit);
           }
           setSelectedProduit(selected);
         }}
       />
-    ))}
+    ) : (
+      produits.map((produit, index) => (
+        <Checkbox.Item
+          key={index}
+          label={`${produit.NomProduit} (${produit.Prix} DT)`}
+          status={selectedProduit.includes(produit.NomProduit) ? 'checked' : 'unchecked'}
+          onPress={() => {
+            const selected = [...selectedProduit];
+            if (selected.includes(produit.NomProduit)) {
+              selected.splice(selected.indexOf(produit.NomProduit), 1);
+            } else {
+              selected.push(produit.NomProduit);
+            }
+            setSelectedProduit(selected);
+          }}
+        />
+      ))
+    )}
   </ScrollView>
 </View>
+
 
     </View>
     

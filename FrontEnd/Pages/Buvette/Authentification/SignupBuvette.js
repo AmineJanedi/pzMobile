@@ -2,14 +2,14 @@ import * as React from "react";
 import { Image } from "expo-image";
 import { StyleSheet, Text, View, Pressable,ScrollView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Color, FontFamily, FontSize, Border } from "../../../GlobalStyles";
+import { FontSize, FontFamily, Color, Border } from "../../../GlobalStyles";
 
-const SignupBuvette = () => {
+const RegistrationParent = () => {
   const navigation = useNavigation();
 
   return (
-<ScrollView>
-    <View style={styles.registration}>
+    <ScrollView>
+         <View style={styles.registrationParent}>
       <Image
         style={styles.shapeIcon}
         contentFit="cover"
@@ -17,13 +17,13 @@ const SignupBuvette = () => {
       />
      
       <Text
-        style={[styles.bienvenueParent, styles.registerTypo]}
+        style={[styles.bienvenueBuvette, styles.registerTypo]}
       >{`Bienvenue Buvette `}</Text>
       <Text style={[styles.remplirCeFormulaire, styles.entrerVotreEmailTypo]}>
         Remplir ce formulaire avant de commencer
       </Text>
       <Pressable
-        style={styles.button}
+        style={[styles.button, styles.buttonLayout]}
         onPress={() => navigation.navigate("LoginBuvette")}
       >
         <View style={[styles.buttonChild, styles.childPosition]} />
@@ -50,29 +50,57 @@ const SignupBuvette = () => {
       <View style={[styles.input3, styles.inputLayout]}>
         <View style={[styles.inputChild, styles.childPosition]} />
         <Text style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}>
-Entrer le nom de l'école
+          Télecharger la patente
+        </Text>
+      </View>
+      <View style={[styles.input4, styles.inputLayout]}>
+        <View style={[styles.inputChild, styles.childPosition]} />
+        <Text
+          style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
+        >{`Télecharger le contrat `}</Text>
+      </View>
+      <View style={[styles.input5, styles.inputLayout]}>
+        <View style={[styles.inputChild, styles.childPosition]} />
+        <Text style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}>
+          Entrer L’adresse de l’école
         </Text>
       </View>
       <Pressable
         style={styles.vousAvezDjaContainer}
-        onPress={() => navigation.navigate("LoginBuvette")}
+        onPress={() => navigation.navigate("Login")}
       >
         <Text style={styles.text1}>
-          <Text style={styles.textClr}>{`Vous avez déja un compte ? `}</Text>
+          <Text
+            style={styles.vousAvezDja}
+          >{`Vous avez déja un compte ? `}</Text>
           <Text style={styles.signIn}>Sign In</Text>
         </Text>
       </Pressable>
-    </View></ScrollView>
+      <Pressable
+        style={styles.component2499}
+        onPress={() => navigation.navigate("Buvette")}
+      >
+        <View style={[styles.component2499Child, styles.childPosition]} />
+        <Image
+          style={[styles.unionIcon, styles.iconLayout]}
+          contentFit="cover"
+          source={require("../../../assets/union4.png")}
+        />
+      </Pressable>
+    </View>
+    </ScrollView>
+ 
   );
 };
 
 const styles = StyleSheet.create({
+  buttonLayout: {
+    width: 325,
+    position: "absolute",
+  },
   iconLayout: {
     maxHeight: "100%",
     maxWidth: "100%",
-    top: "0%",
-    width: "4.53%",
-    height: "100%",
     overflow: "hidden",
   },
   childPosition1: {
@@ -80,17 +108,16 @@ const styles = StyleSheet.create({
     bottom: "0%",
     position: "absolute",
   },
-  textClr: {
-    color: Color.colorBlack,
-  },
   registerTypo: {
     letterSpacing: 1.1,
     fontSize: FontSize.size_lg,
+    fontFamily: FontFamily.poppinsSemiBold,
     fontWeight: "600",
     position: "absolute",
   },
   entrerVotreEmailTypo: {
     lineHeight: 18,
+    fontFamily: FontFamily.poppinsRegular,
     letterSpacing: 0.8,
     fontSize: FontSize.size_smi,
     position: "absolute",
@@ -102,7 +129,7 @@ const styles = StyleSheet.create({
   },
   inputLayout: {
     height: 51,
-    left: 27,
+    left: 28,
     width: 325,
     position: "absolute",
   },
@@ -117,7 +144,6 @@ const styles = StyleSheet.create({
     right: "6.16%",
     left: "89.31%",
     bottom: "0%",
-    maxHeight: "100%",
     maxWidth: "100%",
     top: "0%",
     width: "4.53%",
@@ -128,7 +154,6 @@ const styles = StyleSheet.create({
     right: "12.32%",
     left: "83.15%",
     bottom: "0%",
-    maxHeight: "100%",
     maxWidth: "100%",
     top: "0%",
     width: "4.53%",
@@ -139,18 +164,19 @@ const styles = StyleSheet.create({
     left: "95.47%",
     maxHeight: "100%",
     maxWidth: "100%",
+    overflow: "hidden",
     top: "0%",
     width: "4.53%",
     height: "100%",
-    overflow: "hidden",
     right: "0%",
   },
   text: {
     lineHeight: 15,
     textAlign: "left",
+    color: Color.colorBlack,
+    fontFamily: FontFamily.poppinsSemiBold,
     fontWeight: "600",
     fontSize: FontSize.size_smi,
-    color: Color.colorBlack,
     letterSpacing: 0.8,
     left: "0%",
     top: "0%",
@@ -160,21 +186,21 @@ const styles = StyleSheet.create({
     top: 15,
     left: 25,
     height: 16,
-    width: 325,
-    position: "absolute",
   },
-  bienvenueParent: {
-    top: 237,
-    left: 92,
+  bienvenueBuvette: {
+    top: 138,
+    left: 89,
     lineHeight: 21,
-    color: Color.colorGray_100,
+    color: Color.colorGray_300,
     textAlign: "left",
   },
   remplirCeFormulaire: {
-    top: 272,
-    left: 31,
-    color: "rgba(0, 0, 0, 0.74)",
+    top: 173,
+    color: Color.colorGray_100,
     textAlign: "center",
+    fontFamily: FontFamily.poppinsRegular,
+    left: 28,
+    lineHeight: 18,
   },
   buttonChild: {
     backgroundColor: Color.colorMediumturquoise_200,
@@ -197,11 +223,9 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   button: {
-    top: 656,
-    height: 62,
+    top: 661,
     left: 27,
-    width: 325,
-    position: "absolute",
+    height: 62,
   },
   inputChild: {
     borderRadius: Border.br_3xl,
@@ -216,22 +240,34 @@ const styles = StyleSheet.create({
     top: "31.37%",
     left: "9.23%",
     color: Color.colorGray_200,
+    fontFamily: FontFamily.poppinsRegular,
     textAlign: "left",
   },
   input: {
-    top: 411,
+    top: 304,
   },
   input1: {
-    top: 339,
+    top: 237,
   },
   input2: {
-    top: 483,
+    top: 376,
   },
   input3: {
-    top: 555,
+    top: 448,
+  },
+  input4: {
+    top: 518,
+  },
+  input5: {
+    top: 588,
+  },
+  vousAvezDja: {
+    fontFamily: FontFamily.poppinsRegular,
+    color: Color.colorBlack,
   },
   signIn: {
     fontWeight: "700",
+    fontFamily: FontFamily.poppinsBold,
     color: Color.colorMediumturquoise_200,
   },
   text1: {
@@ -245,7 +281,30 @@ const styles = StyleSheet.create({
     top: 741,
     position: "absolute",
   },
-  registration: {
+  component2499Child: {
+    right: "0%",
+    bottom: "0%",
+    position: "absolute",
+    width: "100%",
+    left: "0%",
+  },
+  unionIcon: {
+    height: "66.55%",
+    width: "66.55%",
+    top: "16.55%",
+    right: "16.9%",
+    bottom: "16.9%",
+    left: "16.55%",
+    position: "absolute",
+  },
+  component2499: {
+    top: 37,
+    left: 13,
+    width: 29,
+    height: 29,
+    position: "absolute",
+  },
+  registrationParent: {
     backgroundColor: Color.colorWhitesmoke,
     flex: 1,
     height: 812,
@@ -254,4 +313,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignupBuvette;
+export default RegistrationParent;

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, Text, Pressable,ScrollView } from "react-native";
+import { StyleSheet, View, Text, Pressable,ScrollView,Button } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontSize, FontFamily, Border } from "../../../GlobalStyles";
@@ -10,21 +10,30 @@ const DashboardParent = () => {
   return (
     <ScrollView>
     <View style={styles.dashboardParent}>
+      
       {/*Partie supérieure */}
+    
       <View style={styles.dashboardParentChild} />
       <View style={[styles.component2499, styles.component2499Layout]}>
         <View style={styles.component2499Child} />
+    
         <Image
           style={[styles.unionIcon, styles.unionIconLayout]}
           contentFit="cover"
           source={require("../../../assets/union6.png")}
         />
+        <View>
+        <Pressable
+         onPress={() => navigation.navigate("CentreDeNotificationParent")}
+>
          <Image
           style={styles.alert}
           contentFit="cover"
           source={require("../../../assets/alert.png")}
         />
+        </Pressable></View>
       </View>
+     
       <Image
         style={styles.shapeIcon}
         contentFit="cover"
@@ -53,7 +62,7 @@ const DashboardParent = () => {
       <View style={[styles.component754, styles.component754Position]}>
         <View style={styles.component2499Child} />
         <Pressable  style={[styles.unionIcon1, styles.unionIconLayout]}
-                onPress={() => navigation.navigate("AlimenterCarteParent")}
+                onPress={() => navigation.navigate("MéthodeBancaireParent")}
                 >
         <Image
           style={[styles.unionIcon1, styles.unionIconLayout]}
@@ -62,7 +71,16 @@ const DashboardParent = () => {
 
         />
         </Pressable>
+        {/*Boutton Commander Bracelet */}
       </View>
+      <View style={styles.buttonContainer}>
+  <Pressable
+    style={{backgroundColor:Color.colorMediumturquoise_200,width:110,height:35,top:326,left:240,borderTopLeftRadius:15,borderBottomRightRadius:15}}
+    onPress={() => navigation.navigate("CommanderBracelet")}
+  >
+    <Text style={{color:'white',marginLeft:14}}>Commander un bracelet</Text>
+  </Pressable>
+</View>
       {/*Famille */}
       <Text style={[styles.famille, styles.syndaClr]}>Famille</Text>
     
@@ -116,6 +134,7 @@ const styles = StyleSheet.create({
     maxWidth: "100%",
     position: "absolute",
     overflow: "hidden",
+    color:"white"
   },
   iconLayout: {
     width: "4.53%",
@@ -225,11 +244,13 @@ const styles = StyleSheet.create({
     right: "12.92%",
     bottom: "13.33%",
     left: "12.92%",
+    color:"white"
   },
   alert:{
     height: "100%",
     width: "74.17%",
-    top: "480.5%",
+    top: "500.5%",
+    left:"-250%"
   },
   component2499: {
     top: 67,

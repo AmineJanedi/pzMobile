@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Text, StyleSheet, View, Pressable,ScrollView } from "react-native";
+import { Text, StyleSheet, View, Pressable,ScrollView,TouchableOpacity} from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border } from "../../../GlobalStyles";
@@ -10,6 +10,36 @@ const DashboardEnfant = () => {
   return (
     <ScrollView>
     <View style={styles.dashboardLemon}>
+      {/*Partie de données de l'enfant */}
+      {/*Modifier enfant */}
+      <View style={[styles.component2500, styles.component2500Layout]}>
+        <View style={[styles.component2498Child, styles.textPosition]} />
+        <Image
+          style={[styles.unionIcon6, styles.unionIconPosition]}
+          contentFit="cover"
+          source={require("../../../assets/union4.png")}
+          onPress={() => navigation.navigate("ModifierEnfant")}
+        />
+      </View>
+      {/*Image et données */}
+      <Image
+        style={styles.shapeIcon}
+        contentFit="cover"
+        source={require("../../../assets/shape1.png")}
+      />
+       <Image
+        style={styles.image3Icon}
+        contentFit="cover"
+        source={require("../../../assets/image-3.png")}
+      />
+      <View style={styles.component2143}>
+        <View style={[styles.component2498Child, styles.textPosition]} />
+        <Image
+          style={[styles.unionIcon3, styles.unionIconLayout]}
+          contentFit="cover"
+          source={require("../../../assets/union1.png")}
+        />
+      </View>
       <View style={styles.amineWrapper}>
         <Text style={styles.amine}>Amine</Text>
       </View>
@@ -27,39 +57,46 @@ const DashboardEnfant = () => {
       <View style={[styles.dashboardLemonChild, styles.dashboardBorder]} />
       <Text style={[styles.dpenses, styles.dpensesTypo]}>Dépenses</Text>
       <View style={[styles.dashboardLemonItem, styles.dashboardBorder]} />
+      {/*Budget  */}
+      <View style={[styles.dashboardLemonChild2, styles.budgetPosition]} />
+      <Text style={styles.dt3}>41,5 DT</Text>
+      <Text style={[styles.budget, styles.budgetPosition]}>Budget</Text>
+      <View style={[styles.component2499, styles.componentIconLayout]}>
+        <View style={[styles.component2498Child, styles.textPosition]} />
+        <Image
+          style={[styles.unionIcon4, styles.unionIconLayout]}
+          contentFit="cover"
+          source={require("../../../assets/union7.png")}
+        />
+      </View>
+      {/*Santé */}
       <View style={[styles.dashboardLemonInner, styles.dashboardBorder]} />
       <Pressable
         style={[styles.button, styles.buttonLayout1]}
-        onPress={() => navigation.navigate("Registration")}
       >
         <View style={styles.buttonChild} />
         <Pressable
           style={[styles.signIn, styles.signPosition]}
-          onPress={() => navigation.navigate("DashboardParent")}
         >
           <Text style={styles.rythmeCardiaque}>Rythme Cardiaque</Text>
         </Pressable>
       </Pressable>
       <Pressable
         style={[styles.button1, styles.buttonLayout1]}
-        onPress={() => navigation.navigate("Registration")}
       >
         <View style={styles.buttonChild} />
         <Pressable
           style={[styles.signIn1, styles.signPosition]}
-          onPress={() => navigation.navigate("DashboardParent")}
         >
           <Text style={styles.rythmeCardiaque}>Température</Text>
         </Pressable>
       </Pressable>
       <Pressable
         style={[styles.button2, styles.buttonLayout1]}
-        onPress={() => navigation.navigate("Registration")}
       >
         <View style={styles.buttonChild} />
         <Pressable
           style={[styles.signIn2, styles.signPosition]}
-          onPress={() => navigation.navigate("DashboardParent")}
         >
           <Text style={styles.rythmeCardiaque}>Oxygéne</Text>
         </Pressable>
@@ -75,57 +112,6 @@ const DashboardEnfant = () => {
         source={require("../../../assets/component-277.png")}
       />
       <Text style={styles.sant}>Santé</Text>
-      <View style={[styles.component1517, styles.componentIconLayout]}>
-        <View style={[styles.component2498Child, styles.textPosition]} />
-        <Image
-          style={[styles.unionIcon1, styles.unionIconPosition]}
-          contentFit="cover"
-          source={require("../../../assets/union1.png")}
-        />
-      </View>
-      <View style={styles.allrgieDeFraiseWrapper}>
-        <Text style={styles.allrgieDeFraise}>{`Allérgie de fraise `}</Text>
-      </View>
-      <Text style={[styles.allrgies, styles.dpensesTypo]}>Allérgies</Text>
-      <Text style={[styles.aujourdhui, styles.ceMoisTypo]}>Aujourd’hui</Text>
-      <Text style={[styles.cetteSemaine, styles.ceMoisTypo]}>
-        Cette Semaine
-      </Text>
-      <View style={[styles.dtWrapper, styles.dtFramePosition]}>
-        <Text style={styles.allrgieDeFraise}>5 DT</Text>
-      </View>
-      <Pressable
-        style={[styles.button3, styles.buttonLayout]}
-        onPress={() => navigation.navigate("Registration")}
-      >
-        <View style={styles.buttonChild} />
-        <Pressable
-          style={[styles.signIn3, styles.textPosition]}
-          onPress={() => navigation.navigate("DashboardParent")}
-        >
-          <Text style={styles.dtail}>Détail</Text>
-        </Pressable>
-      </Pressable>
-      <Pressable
-        style={[styles.button4, styles.buttonLayout]}
-        onPress={() => navigation.navigate("Registration")}
-      >
-        <View style={styles.buttonChild} />
-        <Pressable
-          style={[styles.signIn3, styles.textPosition]}
-          onPress={() => navigation.navigate("DashboardParent")}
-        >
-          <Text style={styles.dtail}>Détail</Text>
-        </Pressable>
-      </Pressable>
-      <View style={[styles.dtContainer, styles.dtFramePosition]}>
-        <Text style={styles.allrgieDeFraise}>38 DT</Text>
-      </View>
-      <View style={[styles.produitsInterditsWrapper, styles.wrapperLayout]}>
-        <Text style={[styles.produitsInterdits, styles.containerTypo]}>
-          20 Produits Interdits
-        </Text>
-      </View>
       <View
         style={[styles.notifi50FoisParMinute08Wrapper, styles.notifi50Layout]}
       >
@@ -155,15 +141,93 @@ const DashboardEnfant = () => {
           </Text>
         </Text>
       </View>
-      <Text style={[styles.ceMois, styles.ceMoisTypo]}>Ce Mois</Text>
+        {/*Medcin AI */}
+
+        <View style={styles.dashboardLemonChild3} />
+      <Image
+        style={[styles.component2499Icon, styles.component2500Layout]}
+        contentFit="cover"
+        source={require("../../../assets/component-2499.png")}
+      />
+      {/*Fin santé */}
+     
+      {/*Allergie */}
+      <View style={styles.allrgieDeFraiseWrapper}>
+        <Text style={styles.allrgieDeFraise}>Allérgie de fraise</Text>
+      </View>
+      <Text style={[styles.allrgies, styles.dpensesTypo]}>Allérgies</Text>
+      <TouchableOpacity  onPress={() => navigation.navigate("GererProduitInterdit")}>
+        <View style={[styles.produitsInterditsWrapper, styles.wrapperLayout]}>
+          <View style={[styles.component2498Child, styles.textPosition]} />
+          <Image
+            style={{ top: -5, width: 20, height: 20,right:-120 }} // Spécifiez une taille pour l'image
+            contentFit="contain" // Utilisez resizeMode pour ajuster l'image
+            source={require("../../../assets/union4.png")}
+          />
+          <Text style={[styles.produitsInterdits, styles.containerTypo]}>
+            20 Produits Interdits
+          </Text>
+        </View>
+      </TouchableOpacity>
       <Pressable
-        style={[styles.button5, styles.buttonLayout]}
-        onPress={() => navigation.navigate("Registration")}
+        style={[styles.dashboardLemonChild1, styles.rectanglePressableLayout]}
+        onPress={() => navigation.navigate("AjouterAllrgie")}
+      />
+      <Image
+        style={[styles.plusCircleIcon, styles.component755Layout]}
+        contentFit="cover"
+        source={require("../../../assets/pluscircle1.png")}
+      />
+      <Text style={[styles.ajouterUneAllrgie, styles.dfinirUnLimiteLayout]}>
+        Ajouter une allérgie
+      </Text>
+      <Image
+        style={[styles.component297Icon, styles.componentIconLayout]}
+        contentFit="cover"
+        source={require("../../../assets/component-297.png")}
+      />
+       
+          
+      {/*Fin allergie */}
+      {/*Dépenses */}
+      <Text style={[styles.aujourdhui, styles.ceMoisTypo]}>Aujourd’hui</Text>
+      <Text style={[styles.cetteSemaine, styles.ceMoisTypo]}>
+        Cette Semaine
+      </Text>
+      <View style={[styles.dtWrapper, styles.dtFramePosition]}>
+        <Text style={styles.allrgieDeFraise}>5 DT</Text>
+      </View>
+      <Pressable
+        style={[styles.button3, styles.buttonLayout]}
       >
         <View style={styles.buttonChild} />
         <Pressable
           style={[styles.signIn3, styles.textPosition]}
-          onPress={() => navigation.navigate("DashboardParent")}
+          onPress={() => navigation.navigate("DetailParJour")}
+          >
+          <Text style={styles.dtail}>Détail</Text>
+        </Pressable>
+      </Pressable>
+      <Pressable
+        style={[styles.button4, styles.buttonLayout]}
+      >
+        <View style={styles.buttonChild} />
+        <Pressable
+          style={[styles.signIn3, styles.textPosition]}
+        >
+          <Text style={styles.dtail}>Détail</Text>
+        </Pressable>
+      </Pressable>
+      <View style={[styles.dtContainer, styles.dtFramePosition]}>
+        <Text style={styles.allrgieDeFraise}>38 DT</Text>
+      </View>
+      <Text style={[styles.ceMois, styles.ceMoisTypo]}>Ce Mois</Text>
+      <Pressable
+        style={[styles.button5, styles.buttonLayout]}
+      >
+        <View style={styles.buttonChild} />
+        <Pressable
+          style={[styles.signIn3, styles.textPosition]}
         >
           <Text style={styles.dtail}>Détail</Text>
         </Pressable>
@@ -175,18 +239,6 @@ const DashboardEnfant = () => {
         style={[styles.rectanglePressable, styles.rectanglePressableLayout]}
         onPress={() => navigation.navigate("DpenseParJour")}
       />
-      <Pressable
-        style={[styles.dashboardLemonChild1, styles.rectanglePressableLayout]}
-        onPress={() => navigation.navigate("AjouterAllrgie")}
-      />
-      <Image
-        style={[styles.plusCircleIcon, styles.component755Layout]}
-        contentFit="cover"
-        source={require("../../../assets/pluscircle.png")}
-      />
-      <Text style={[styles.ajouterUneAllrgie, styles.dfinirUnLimiteLayout]}>
-        Ajouter une allérgie
-      </Text>
       <Text style={[styles.dfinirUnLimite, styles.dfinirUnLimiteLayout]}>
         Définir un Limite de dépense
       </Text>
@@ -195,69 +247,21 @@ const DashboardEnfant = () => {
         <Image
           style={[styles.unionIcon2, styles.unionIconLayout]}
           contentFit="cover"
-          source={require("../../../assets/union1.png")}
+          source={require("../../../assets/union7.png")}
         />
       </View>
-      <Image
-        style={[styles.component297Icon, styles.componentIconLayout]}
-        contentFit="cover"
-        source={require("../../../assets/component-297.png")}
-      />
-      <Image
-        style={styles.image3Icon}
-        contentFit="cover"
-        source={require("../../../assets/image-3.png")}
-      />
-      <View style={styles.component2143}>
-        <View style={[styles.component2498Child, styles.textPosition]} />
-        <Image
-          style={[styles.unionIcon3, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union1.png")}
-        />
-      </View>
-      <View style={[styles.dashboardLemonChild2, styles.budgetPosition]} />
-      <View style={[styles.component2499, styles.componentIconLayout]}>
-        <View style={[styles.component2498Child, styles.textPosition]} />
-        <Image
-          style={[styles.unionIcon4, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union1.png")}
-        />
-      </View>
-      <Text style={styles.dt3}>41,5 DT</Text>
-      <Text style={[styles.budget, styles.budgetPosition]}>Budget</Text>
-      <Image
-        style={styles.shapeIcon}
-        contentFit="cover"
-        source={require("../../../assets/shape1.png")}
-      />
+      {/*Fin dépenses */}     
+      {/* Icon retou vers dashboard parent*/}
       <Pressable
         style={styles.component24991}
         onPress={() => navigation.navigate("DashboardParent")}
       >
-        <View style={[styles.component2498Child, styles.textPosition]} />
         <Image
           style={[styles.unionIcon5, styles.unionIconLayout]}
           contentFit="cover"
-          source={require("../../../assets/union1.png")}
+          source={require("../../../assets/union3.png")}
         />
       </Pressable>
-      <View style={styles.dashboardLemonChild3} />
-      <Image
-        style={[styles.component2499Icon, styles.component2500Layout]}
-        contentFit="cover"
-        source={require("../../../assets/component-2499.png")}
-      />
-      <View style={[styles.component2500, styles.component2500Layout]}>
-        <View style={[styles.component2498Child, styles.textPosition]} />
-        <Image
-          style={[styles.unionIcon6, styles.unionIconPosition]}
-          contentFit="cover"
-          source={require("../../../assets/union1.png")}
-        />
-      </View>
-     
     </View></ScrollView>
   );
 };
@@ -469,7 +473,7 @@ const styles = StyleSheet.create({
   am: {
     left: 227,
     width: 40,
-    height: 7,
+    height: 17,
     color: Color.colorBlack,
     lineHeight: 9,
     letterSpacing: 0.5,
@@ -485,7 +489,7 @@ const styles = StyleSheet.create({
     lineHeight: 10,
     width: 199,
     left: 140,
-    height: 7,
+    height: 17,
     color: Color.colorBlack,
     letterSpacing: 0.5,
     textAlign: "left",
@@ -566,11 +570,11 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   unionIcon1: {
-    height: "74%",
+    height: "150%",
     width: "74%",
     right: "13%",
-    bottom: "13.5%",
-    left: "13%",
+    bottom: "55.5%",
+    left: "75%",
   },
   component1517: {
     top: 493,
@@ -604,7 +608,7 @@ const styles = StyleSheet.create({
     top: 289,
   },
   dtWrapper: {
-    width: 28,
+    width: 55,
     top: 241,
   },
   dtail: {
@@ -620,6 +624,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     height: "100%",
     fontFamily: FontFamily.poppins,
+    marginRight:"25%",
+    marginTop:"5%"
   },
   signIn3: {
     top: "0%",
@@ -634,7 +640,7 @@ const styles = StyleSheet.create({
   },
   dtContainer: {
     top: 284,
-    width: 36,
+    width: 45,
   },
   produitsInterdits: {
     width: 115,
@@ -702,7 +708,7 @@ const styles = StyleSheet.create({
   },
   dtFrame: {
     top: 332,
-    width: 41,
+    width: 45,
   },
   rectanglePressable: {
     top: 392,
@@ -721,12 +727,12 @@ const styles = StyleSheet.create({
     top: 401,
   },
   unionIcon2: {
-    height: "58.18%",
-    width: "58.18%",
-    top: "20.91%",
-    right: "20.91%",
+    height: "100.18%",
+    width: "100.18%",
+    top: "0.91%",
+    right: "0.91%",
     bottom: "20.91%",
-    left: "20.91%",
+    left: "0.91%",
   },
   component755: {
     top: 400,
@@ -760,29 +766,32 @@ const styles = StyleSheet.create({
   },
   dashboardLemonChild2: {
     left: 203,
-    width: 75,
+    width: 100,
     top: 147,
     borderWidth: 1,
     borderColor: Color.colorMediumturquoise_100,
     backgroundColor: Color.colorMediumturquoise_200,
     borderStyle: "solid",
-    height: 21,
+    height: 30,
+    backgroundColor:Color.colorMediumturquoise_200,
+    borderTopLeftRadius:15,
+    borderBottomRightRadius:15
   },
   unionIcon4: {
-    height: "58%",
-    width: "58.5%",
-    top: "21%",
-    right: "20.5%",
+    height: "100%",
+    width: "100%",
+    top: "10%",
     bottom: "21%",
-    left: "21%",
+    left: "55%",
+    marginLeft:"15%"
   },
   component2499: {
     top: 148,
     left: 257,
   },
   dt3: {
-    top: 149,
-    left: 206,
+    top: 152,
+    left: 210,
     fontFamily: FontFamily.portLligatSans,
     width: 92,
     lineHeight: 17,

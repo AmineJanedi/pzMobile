@@ -80,17 +80,30 @@ const ListeProduitBuvette = () => {
         style={{top:276,left:235}}
       />
       </View>
-      {/* Affichage des produits récupérés */}
       <View style={[styles.listeProduitInner, styles.listeChildShadowBox]}>
-      <ScrollView>
-      {produits && Array.isArray(produits) && produits.map((produit, index) => (
-    <View key={index} style={{ flexDirection: 'row'}}>
-      <Text style={{right:-19,top:5,marginRight: 40 }}>{`Nom : ${produit.NomProduit}`}</Text>
-      <Text style={{top:5,marginBottom:15}}>{`Prix : ${produit.Prix}`}</Text>
-    </View>
-  ))}
-  </ScrollView>
-    </View>
+  <ScrollView>
+    {/* Affichage des produits récupérés */}
+    {chercher === '' ? (
+      produits && Array.isArray(produits) && produits.map((produit, index) => (
+        <View key={index} style={{ flexDirection: 'row'}}>
+          <Text style={{right:-19,top:5,marginRight: 20 }}>{`ID : ${produit.ID}`}</Text>
+          <Text style={{right:-19,top:5,marginRight: 40 }}>{`Nom : ${produit.NomProduit}`}</Text>
+          <Text style={{top:5,marginBottom:15,marginLeft:1}}>{`Prix : ${produit.Prix}`}</Text>
+        </View>
+      ))
+    ) : (
+      /* Résultat de recherche */
+      produits.filter(produit => produit.NomProduit.toLowerCase().includes(chercher.toLowerCase())).map((resultat, index) => (
+        <View key={index} style={{ flexDirection: 'row'}}>
+          <Text style={{right:-19,top:5,marginRight: 20 }}>{`ID : ${resultat.ID}`}</Text>
+          <Text style={{right:-19,top:5,marginRight: 40 }}>{`Nom : ${resultat.NomProduit}`}</Text>
+          <Text style={{top:5,marginBottom:15,marginLeft:1}}>{`Prix : ${resultat.Prix}`}</Text>
+        </View>
+      ))
+    )}
+  </ScrollView> 
+</View> 
+
          {/*Boutton Ajouter un produit */}
       <Pressable
         style={[styles.rectanglePressable, styles.listeProduitChildBg]}

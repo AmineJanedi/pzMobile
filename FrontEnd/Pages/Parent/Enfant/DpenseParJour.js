@@ -3,13 +3,21 @@ import { Text, StyleSheet, View, Pressable,ScrollView } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border } from "../../../GlobalStyles";
+import Slider from "@react-native-community/slider";
 
 const DpenseParJour = () => {
   const navigation = useNavigation();
-
+    const [value, setValue] = React.useState(0); // Initial value
+  
+    const handleValueChange = (newValue) => {
+      setValue(newValue);
+      // Optional: Perform additional actions based on the new value
+    };
   return (
     <ScrollView>
     <View style={styles.dpenseParJour}>
+   
+
       <View style={styles.amineWrapper}>
         <Text style={styles.amine}>Amine</Text>
       </View>
@@ -37,17 +45,8 @@ const DpenseParJour = () => {
           source={require("../../../assets/union1.png")}
         />
       </View>
-      <View style={[styles.dpenseParJourChild, styles.childBg]} />
-      <View style={styles.component2499}>
-        <View style={[styles.component2498Child, styles.childPosition]} />
-        <Image
-          style={[styles.unionIcon2, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union1.png")}
-        />
-      </View>
-      <Text style={styles.dt}>41,5 DT</Text>
-      <Text style={styles.budget}>Budget</Text>
+      
+      
       <Image
         style={styles.shapeIcon}
         contentFit="cover"
@@ -61,45 +60,38 @@ const DpenseParJour = () => {
           source={require("../../../assets/union3.png")}
         />
       </View>
+      {/*Limiter les dépenese cadre */}
       <View style={styles.dpenseParJourItem} />
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("Registration")}
-      >
-        <View style={[styles.buttonChild, styles.childBg]} />
-        <Pressable
-          style={[styles.signIn, styles.childPosition]}
-          onPress={() => navigation.navigate("DashboardParent")}
-        >
-          <Text style={styles.continuer}>Continuer</Text>
-        </Pressable>
-      </Pressable>
-      <Text style={[styles.jours, styles.dt1Layout]}>Jours</Text>
-      <Text style={[styles.dt1, styles.dt1Layout]}>5 DT</Text>
+      <Slider
+      style={{ width: 200, height: 40,top:350,right:-80 }} // Customize size
+      minimumValue={0}
+      maximumValue={100} // Adjust range
+      value={value} // Controlled component: set and update value
+      onValueChange={handleValueChange}
+      step={1} // Optional: define step for discrete values
+      thumbTintColor="#3498db" // Customize thumb color (optional)
+      minimumTrackTintColor="#007bff" // Customize track color (optional)
+    />
+          <Text style={{ marginLeft: 10,top:315,right:-275}}>{Math.round(value)}</Text>
+      <Text style={[styles.jours, styles.dt1Layout]}>Maximum dépense par Jours</Text>
+      <Text style={[styles.dt1, styles.dt1Layout]}>DT</Text>
       <Text style={styles.limiterLesDpenses}>Limiter les dépenses</Text>
-      <View style={[styles.dpenseParJourInner, styles.dpenseLayout]} />
-      <Image
-        style={[styles.ellipseIcon, styles.dpenseChildLayout]}
-        contentFit="cover"
-        source={require("../../../assets/ellipse-243.png")}
-      />
+     {/*
       <Text style={[styles.semaine, styles.dt2Layout]}>Semaine</Text>
       <Text style={[styles.dt2, styles.dt2Layout]}>35 DT</Text>
-      <View style={[styles.rectangleView, styles.dpenseLayout]} />
-      <Image
-        style={[styles.dpenseParJourChild1, styles.dpenseChildLayout]}
-        contentFit="cover"
-        source={require("../../../assets/ellipse-243.png")}
-      />
+     
       <Text style={[styles.mois, styles.dt3Layout]}>Mois</Text>
       <Text style={[styles.dt3, styles.dt3Layout]}>120 DT</Text>
-      <View style={[styles.dpenseParJourChild2, styles.dpenseLayout]} />
-      <Image
-        style={[styles.dpenseParJourChild3, styles.dpenseChildLayout]}
-        contentFit="cover"
-        source={require("../../../assets/ellipse-243.png")}
-      />
-     
+       */}
+       {/*boutoon appliquer */}
+      <Pressable
+        style={[styles.rectanglePressable, styles.rectanglePressableBorder]}
+        onPress={{}}
+    >
+      <Text style={[styles.ajouterDesProduitsInterdit, styles.budgetTypo]}>
+        Appliquer les limites de dépenses
+      </Text>
+    </Pressable>
     </View></ScrollView>
   );
 };
@@ -109,6 +101,28 @@ const styles = StyleSheet.create({
     left: "0%",
     top: "0%",
   },
+  rectanglePressableBorder: {
+    borderWidth: 1,
+    borderColor: Color.colorMediumturquoise_100,
+    borderStyle: "solid",
+    backgroundColor: Color.colorMediumturquoise_200,
+    position: "absolute",
+  },
+  rectanglePressable: {
+    top: 420,
+    left: 60,
+    width: 250,
+    height: 50,
+    borderRadius:15
+  },
+  ajouterDesProduitsInterdit: {
+    width: "100%",
+    height: "100%",
+    left:15,
+    top:15,
+    color: Color.colorWhite,
+  },
+
   unionIconLayout: {
     maxHeight: "100%",
     maxWidth: "100%",
@@ -232,7 +246,7 @@ const styles = StyleSheet.create({
   am: {
     left: 227,
     width: 40,
-    height: 7,
+    height: "100%",
     color: Color.colorBlack,
     lineHeight: 9,
     letterSpacing: 0.5,
@@ -248,7 +262,7 @@ const styles = StyleSheet.create({
     lineHeight: 10,
     width: 199,
     left: 140,
-    height: 7,
+    height: "100%",
     color: Color.colorBlack,
     letterSpacing: 0.5,
     textAlign: "left",
@@ -365,7 +379,7 @@ const styles = StyleSheet.create({
     elevation: 15,
     shadowOpacity: 1,
     width: 323,
-    height: 421,
+    height: "30%",
     position: "absolute",
   },
   buttonChild: {
@@ -403,24 +417,24 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   jours: {
-    width: 93,
+    width: "100%",
     lineHeight: 14,
     letterSpacing: 0.7,
     fontSize: FontSize.size_xs,
-    top: 353,
-    height: 16,
+    top: 328,
+    height: "100%",
     textAlign: "center",
     color: Color.colorBlack,
     fontFamily: FontFamily.poppins,
-    left: 21,
+    right: 30,
   },
   dt1: {
     left: 271,
     width: 93,
     lineHeight: 14,
     letterSpacing: 0.7,
-    fontSize: FontSize.size_xs,
-    top: 353,
+    fontSize: FontSize.size_xl,
+    top: 357,
     height: 16,
     textAlign: "center",
     color: Color.colorBlack,

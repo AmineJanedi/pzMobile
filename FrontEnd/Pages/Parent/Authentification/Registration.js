@@ -1,14 +1,28 @@
-import * as React from "react";
+import { useState,useEffect } from 'react';
 import { Image } from "expo-image";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet, Text, View, Pressable,ScrollView,TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border } from "../../../GlobalStyles";
+import { RadioButton } from 'react-native-paper';
 
 const Registration = () => {
   const navigation = useNavigation();
+  const [selectedValue, setSelectedValue] = useState('Premium');
+  const onPress = () => {
+    if (selectedValue === "Premium") {
+      navigation.navigate("ComptePremium");
+    } else if (selectedValue === "Gratuit") {
+      navigation.navigate("Login");
+    } else {
+      // Afficher un message d'erreur
+      alert("Veuillez sélectionner un type de compte");
+    }
+  };
+  
 
   return (
-    <View style={styles.registration}>
+    <ScrollView> 
+       <View style={styles.registration}>
       <Image
         style={styles.shapeIcon}
         contentFit="cover"
@@ -21,37 +35,69 @@ const Registration = () => {
       <Text style={[styles.remplirCeFormulaire, styles.entrerVotreEmailTypo]}>
         Remplir ce formulaire avant de commencer
       </Text>
-      <Pressable
-        style={styles.button}
-        onPress={() => navigation.navigate("DashboardParent")}
-      >
-        <View style={[styles.buttonChild, styles.childPosition]} />
-        <Text style={[styles.register, styles.registerTypo]}>Créer Compte</Text>
-      </Pressable>
-      <View style={[styles.input, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}>
-          Entrer votre Email
-        </Text>
-      </View>
-      <View style={[styles.input1, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}>
-          Entrer votre nom
-        </Text>
-      </View>
-      <View style={[styles.input2, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}>
-          Entrer Mot de passe
-        </Text>
-      </View>
-      <View style={[styles.input3, styles.inputLayout]}>
-        <View style={[styles.inputChild, styles.childPosition]} />
-        <Text style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}>
-          Confirmer votre Mot de passe
-        </Text>
-      </View>
+     
+    {/* Champs Nom */}
+<View style={[styles.input1, styles.inputLayout]}>
+  <View style={[styles.inputChild, styles.childPosition]} />
+  <TextInput
+    style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
+    placeholder="Entrer votre nom"
+  />
+</View>
+
+{/* Champs email */}
+<View style={[styles.input, styles.inputLayout]}>
+  <View style={[styles.inputChild, styles.childPosition]} />
+  <TextInput
+    style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
+    placeholder="Confirmer mot de passe"
+  />
+</View>
+
+{/* Champs Mot de passe */}
+<View style={[styles.input2, styles.inputLayout]}>
+  <View style={[styles.inputChild, styles.childPosition]} />
+  <TextInput
+    style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
+    placeholder="Entrer votre Email"
+  />
+</View>
+
+{/* Champs Confirmer mot de passe */}
+<View style={[styles.input3, styles.inputLayout]}>
+  <View style={[styles.inputChild, styles.childPosition]} />
+  <TextInput
+    style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
+    placeholder="Entrer votre mot de passe"
+    secureTextEntry={true} // Make password field hidden
+  />
+</View>
+
+{/* Champs entrer CIN */}
+<View style={[styles.input4, styles.inputLayout]}>
+  <View style={[styles.inputChild, styles.childPosition]} />
+  <TextInput
+    style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
+    placeholder="Entrer votre CIN"
+  />
+</View>
+ {/* Type de compte*/}
+ <View style={{ position: 'absolute', bottom: 135,left:45 }}>
+        <Text>Choisir le type de votre compte</Text>
+      <RadioButton.Group onValueChange={setSelectedValue} value={selectedValue}>
+        <RadioButton.Item label="Premium" value="Premium" />
+        <RadioButton.Item label="Gratuit" value="Gratuit" />
+      </RadioButton.Group>
+    </View>
+         {/*Bouton créer un compte */}
+         <Pressable
+  style={styles.button}
+  onPress={onPress}
+>
+  <View style={[styles.buttonChild, styles.childPosition]} />
+  <Text style={[styles.register, styles.registerTypo]}>Créer Compte</Text>
+</Pressable>
+       {/*Sign in choice */}
       <Pressable
         style={styles.vousAvezDjaContainer}
         onPress={() => navigation.navigate("Login")}
@@ -61,7 +107,9 @@ const Registration = () => {
           <Text style={styles.signIn}>Sign In</Text>
         </Text>
       </Pressable>
-    </View>
+     
+    </View></ScrollView>
+
   );
 };
 
@@ -99,7 +147,7 @@ const styles = StyleSheet.create({
   },
   childPosition: {
     left: "0%",
-    top: "0%",
+    top: "25%",
     height: "100%",
   },
   inputLayout: {
@@ -166,14 +214,14 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   bienvenueParent: {
-    top: 237,
+    top: 135,
     left: 92,
     lineHeight: 21,
     color: Color.colorGray_100,
     textAlign: "left",
   },
   remplirCeFormulaire: {
-    top: 272,
+    top: 170,
     left: 31,
     color: "rgba(0, 0, 0, 0.74)",
     textAlign: "center",
@@ -195,12 +243,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     textAlign: "center",
     left: "0%",
-    top: "0%",
+    top: 18,
     height: "100%",
   },
   button: {
-    top: 656,
-    height: 62,
+    top: 680,
+    height: 40,
     left: 27,
     width: 325,
     position: "absolute",
@@ -224,13 +272,16 @@ const styles = StyleSheet.create({
     top: 411,
   },
   input1: {
-    top: 339,
+    top: 200,
   },
   input2: {
-    top: 483,
+    top: 270,
   },
   input3: {
-    top: 555,
+    top: 340,
+  },
+  input4: {
+    top: 485,
   },
   signIn: {
     fontWeight: "700",

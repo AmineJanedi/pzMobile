@@ -64,16 +64,7 @@ const AlimenterCarteParent = () => {
           source={require("../../../assets/ellipse-246.png")}
         />
       </Pressable>
-      <Pressable
-        style={[styles.container, styles.frameLayout]}
-        onPress={() => navigation.navigate("MthodeSweatCoin")}
-      >
-        <Image
-          style={styles.icon}
-          contentFit="cover"
-          source={require("../../../assets/ellipse-247.png")}
-        />
-      </Pressable>
+     
       <Pressable
         style={[styles.frame, styles.frameLayout]}
         onPress={() => navigation.navigate("MthodeCoupons2")}

@@ -18,26 +18,32 @@ const FirstPage = () => {
       />
        <Image
         style={styles.logo}
-        source={require("../assets/LOGO.svg")}
+        source={require("../assets/Logo.png")}
       />
       <Text style={styles.logotxt}>Bienvenue dans ParentZEN</Text>
       <View style={styles.stpageChild} />
+
       <Text
         style={[styles.continuerEnTant, styles.parentTypo]}
       >{`Continuer en tant que `}</Text>
+    
+        {/*Section Parent */}
+        <View style={styles.stpageChild1} />
       <Pressable
         style={[styles.wrapper, styles.wrapperPosition]}
         onPress={() => navigation.navigate("WelcomeP")}
       >
        
       </Pressable>
+      <Text style={[styles.parent, styles.parentTypo]}>Parent</Text>
+      {/*Section Buvette */}
+    <View style={styles.stpageChild2} />
       <Pressable
         style={[styles.container, styles.wrapperPosition]}
         onPress={() => navigation.navigate("WelcomeB")}
       >
        
       </Pressable>
-      <Text style={[styles.parent, styles.parentTypo]}>Parent</Text>
       <Text style={styles.buvette}>Buvette</Text>
       
     </View></ScrollView>
@@ -46,17 +52,17 @@ const FirstPage = () => {
 
 const styles = StyleSheet.create({
   logo:{
-height:100,
-width:100,
+height:110,
+width:110,
 left:140,
 top:80,
   },
   logotxt:{
-    left:65,
-    top:90,
+    left:55,
+    top:80,
     fontFamily: FontFamily.poppinsSemiBold,
     lineHeight: 31,
-    letterSpacing: 1.4,
+    letterSpacing: 2.5,
     fontSize: FontSize.size_lg,
 
   },
@@ -90,16 +96,34 @@ top:80,
   },
   stpageChild: {
     top: 227,
-    left: 29,
+    left: 33,
     borderRadius: 66,
     backgroundColor: "rgba(80, 194, 201, 0.24)",
     width: 319,
     height: 357,
     position: "absolute",
   },
+  stpageChild1: {
+    top: 328,
+    left: 60,
+    borderRadius: 66,
+    backgroundColor: "rgba(10, 150, 150, 0.34)",
+    width: 250,
+    height: 44,
+    position: "absolute",
+  },
+  stpageChild2: {
+    top: 467,
+    left: 60,
+    borderRadius: 66,
+    backgroundColor: "rgba(10, 150, 150, 0.34)",
+    width: 250,
+    height: 44,
+    position: "absolute",
+  },
   continuerEnTant: {
     top: 259,
-    left: 62,
+    left: 81,
     width: 241,
   },
   icon: {
@@ -116,12 +140,12 @@ top:80,
   },
   parent: {
     top: 338,
-    left: 146,
+    left: 152,
     width: 71,
   },
   buvette: {
     top: 475,
-    left: 147,
+    left: 152,
     width: 83,
     height: 22,
     textAlign: "left",

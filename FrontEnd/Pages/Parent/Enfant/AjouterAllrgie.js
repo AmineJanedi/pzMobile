@@ -2,24 +2,28 @@ import * as React from "react";
 import { Text, StyleSheet, View ,ScrollView,TouchableOpacity,Pressable} from "react-native";
 import { Image } from "expo-image";
 import { FontFamily, Color, FontSize, Border } from "../../../GlobalStyles";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigation } from "@react-navigation/native";
 
 
 const AjouterAllrgie = () => {
+  const navigation = useNavigation();
+  const [glutenName, setGlutenName] = useState('');
+ 
   const [glutenClicked, setGlutenClicked] = useState(false);
-  const [ChampignionClicked, setChampignionClicked] = useState(false);
+  const [EggClicked, setEggClicked] = useState(false);
   const [PoissonClicked, setPoissonClicked] = useState(false);
   const [FraiseClicked, setFraiseClicked] = useState(false);
   const [LaitClicked, setLaitClicked] = useState(false);
-  const [SoyaClicked, setSoyaClicked] = useState(false);
+  const [ArachideClicked, setArachideClicked] = useState(false);
   const [ViendeClicked, setViendeClicked] = useState(false);
-  const [SesameClicked, setSesameClicked] = useState(false);
+  const [ChocolatClicked, setChocolatClicked] = useState(false);
 
   const handleGlutenClick = () => {
     setGlutenClicked(!glutenClicked);
   };
-  const handleChampignionClick = () => {
-    setChampignionClicked(!ChampignionClicked);
+  const handleEggClick = () => {
+    setEggClicked(!EggClicked);
   };
   const handlePoissonClick = () => {
     setPoissonClicked(!PoissonClicked);
@@ -30,16 +34,25 @@ const AjouterAllrgie = () => {
   const handleLaitClick = () => {
     setLaitClicked(!LaitClicked);
   };
-  const handleSoyaClick = () => {
-    setSoyaClicked(!SoyaClicked);
+  const handleArachideClick = () => {
+    setArachideClicked(!ArachideClicked);
   };
   const handleViendeClick = () => {
     setViendeClicked(!ViendeClicked);
   };
-  const handleSesameClick = () => {
-    setSesameClicked(!SesameClicked);
+  const handleChocolatClick = () => {
+    setChocolatClicked(!ChocolatClicked);
   };
-
+  useEffect(() => {
+    // Appel à l'API pour récupérer l'allergie avec le nom "gluten"
+    fetch('http://192.168.1.4:4000/Allergies/GetAllergies/Gluten')
+      .then(response => response.json())
+      .then(data => {
+        // Met à jour le nom de l'allergie (gluten) dans l'état local
+        setGlutenName(data.NomAllergie);
+      })
+      .catch(error => console.error('Erreur lors de la récupération de l\'allergie gluten :', error));
+  }, []); // Exécute une seule fois lors du montage du composant
    
   return (
     <ScrollView>
@@ -154,16 +167,16 @@ const AjouterAllrgie = () => {
             source={require("../../../assets/beef.png")}
           />
         </TouchableOpacity>
-        {/* SOYA */}
+        {/* Arachide */}
         <TouchableOpacity
           style={[
             styles.ajouterAllrgieChild8,
             styles.ajouterChildShadowBox1,
-            SoyaClicked && styles.clickedBorder, // Applique la bordure si soyaClicked est vrai
+            ArachideClicked && styles.clickedBorder, // Applique la bordure si ArachideClicked est vrai
           ]}
-          onPress={handleSoyaClick}
+          onPress={handleArachideClick}
         >
-          <Text style={{height:40,top:7,width:40,right:-25,top:65}}>Soya</Text>
+          <Text style={{height:40,top:7,width:58,right:-20,top:65}}>Arachide</Text>
           <Image
             style={{height:40,top:7,width:20,right:-35,top:-20}}
             contentFit="cover"
@@ -171,24 +184,24 @@ const AjouterAllrgie = () => {
           />
         </TouchableOpacity>
 
-      {/*Sesame */}
+      {/*Chocolat */}
       <TouchableOpacity
           style={[
             styles.ajouterAllrgieChild5,
             styles.ajouterChildShadowBox,
-            SesameClicked && styles.clickedBorder, // Applique la bordure si sesameClicked est vrai
+            ChocolatClicked && styles.clickedBorder, // Applique la bordure si ChocolatClicked est vrai
           ]}
-          onPress={handleSesameClick}
+          onPress={handleChocolatClick}
         >
-          <Text style={{top:60,right:-25,}}>Sesame</Text>
+          <Text style={{top:60,right:-20,}}>Chocolat</Text>
           <Image
-            style={{height:50,width:45,left:29}}
+            style={{height:40,width:40,left:25}}
             contentFit="cover"
-            source={require("../../../assets/sesame.png")}
+            source={require("../../../assets/Chocolat.png")}
           />
         </TouchableOpacity>
-        {/*Gluten */}
-        <TouchableOpacity
+       {/* Gluten */}
+       <TouchableOpacity
           style={[
             styles.rectangleView,
             styles.ajouterChildShadowBox2,
@@ -196,29 +209,29 @@ const AjouterAllrgie = () => {
           ]}
           onPress={handleGlutenClick}
         >
-          <Text style={{top:55,right:-25,}}>Gluten</Text>
-          <View style={{top:10,right:-35,height:50,width:65}}>
-            <Image
+          <Text style={{ top: 55, right: -25 }}>{glutenName}</Text>
+          <View style={{ top: 10, right: -35, height: 50, width: 65 }}>
+            <Image 
               style={[styles.glutenIcon, styles.glutenIconLayout]}
               contentFit="cover"
               source={require("../../../assets/gluten.png")}
             />
           </View>
         </TouchableOpacity>
-{/*Champignion */}
+{/*Egg */}
 <TouchableOpacity
           style={[
             styles.ajouterAllrgieChild1,
             styles.ajouterChildShadowBox2,
-            ChampignionClicked && styles.clickedBorder, // Applique la bordure si champignionClicked est vrai
+            EggClicked && styles.clickedBorder, // Applique la bordure si EggClicked est vrai
           ]}
-          onPress={handleChampignionClick}
+          onPress={handleEggClick}
         >
-          <Text style={{top:55,right:-2,}}>Champignion</Text>
+          <Text style={{top:63,right:-30,}}>œuf</Text>
           <Image
-            style={{top:2,right:-25,height:42,width:50}}
+            style={{top:2,right:-20,height:42,width:50}}
             contentFit="cover"
-            source={require("../../../assets/mushroom.png")}
+            source={require("../../../assets/Egg.png")}
           />
         </TouchableOpacity>
         {/*Poisson */}
@@ -238,32 +251,23 @@ const AjouterAllrgie = () => {
           />
         </TouchableOpacity>
 
-      {/*Les rectangles de chaque allérgies */}
+      {/*Autre */}
       <View style={[styles.ajouterAllrgieChild9, styles.ajouterChildShadowBox]} />
-      {/*Les images de chaque allérgies */}
-      
-     
-      
-    
-     
       <Image
         style={styles.plusCircleIcon}
         contentFit="cover"
         source={require("../../../assets/pluscircle.png")}
       />
-     
-     
 
-     
-     
-       {/*Les Textes de chaque allérgies */}
-      <Text style={[styles.autre, styles.autreLayout]}>Autre</Text>
+            <Text style={[styles.autre, styles.autreLayout]}  onPress={() => navigation.navigate("AutreAllergie")}>Autre</Text>
+
+       {/*Bouton ajouter */}
       <Pressable
         style={[styles.button1, styles.button1Layout]}
-        onPress={() => navigation.navigate("DashboardLemon")}
+        onPress={() => navigation.navigate("AutreAllergie")}
       >
         <View style={[styles.buttonItem, styles.buttonChildBg]} />
-        <Text style={[styles.register, styles.registerTypo]}>Ajouter</Text>
+        <Text style={[styles.register, styles.registerTypo]}  onPress={() => navigation.navigate("AutreAllergie")}>Ajouter</Text>
       </Pressable>
     </View></ScrollView>
 
@@ -275,6 +279,19 @@ const styles = StyleSheet.create({
     height: 21,
     position: "absolute",
   },
+  buttonItem:{
+    top: 690,
+    left: 38,
+    borderStyle: "solid",
+    borderColor: Color.colorMediumturquoise_100,
+    borderWidth: 1,
+    width: 305,
+    height: 45,
+    
+  },
+  buttonChildBg:{
+    backgroundColor:Color.colorMediumturquoise_200,
+  },
   registerTypo: {
     letterSpacing: 1.1,
     fontSize: FontSize.size_lg,
@@ -282,7 +299,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     position: "absolute",
     top:700,
-    right:150
+    right:150,
+    color: Color.colorWhite,
   },
   ajouterEnfant1: {
     top: 159,
@@ -293,7 +311,7 @@ const styles = StyleSheet.create({
   },
   clickedBorder: {
     borderWidth: 2,
-    borderColor: 'black',
+    borderColor: Color.colorMediumturquoise_200,
   },
   glutenIconLayout: {
     width: 18,
@@ -416,7 +434,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     overflow: "hidden",
   },
-  sesameLayout: {
+  ChocolatLayout: {
     height: 16,
     position: "absolute",
   },
@@ -660,7 +678,7 @@ const styles = StyleSheet.create({
   ajouterAllrgieChild5: {
     left: 142,
   },
-  sesame: {
+  Chocolat: {
     width: 93,
     textAlign: "center",
     top: 589,
@@ -672,7 +690,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppins,
     left: 140,
   },
-  sesameIcon: {
+  ChocolatIcon: {
     left: 173,
     top: 557,
     overflow: "hidden",
@@ -693,7 +711,7 @@ const styles = StyleSheet.create({
   ajouterAllrgieChild8: {
     left: 262,
   },
-  soyaIcon: {
+  ArachideIcon: {
     top: 438,
     left: 292,
     overflow: "hidden",
@@ -719,7 +737,7 @@ const styles = StyleSheet.create({
     fontSize: FontSize.size_xs,
     top: 351,
   },
-  champignion: {
+  Egg: {
     left: 139,
     fontSize: FontSize.size_3xs,
     letterSpacing: 0.6,
@@ -743,7 +761,7 @@ const styles = StyleSheet.create({
   lait: {
     left: 142,
   },
-  soya: {
+  Arachide: {
     left: 263,
   },
   poisson: {

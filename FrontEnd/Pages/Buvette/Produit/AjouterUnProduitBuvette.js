@@ -10,16 +10,20 @@ const AjouterUnProduitBuvette = () => {
   const navigation = useNavigation();
   const [nomProduit, setNomProduit] = useState('');
   const [prix, setPrix] = useState('');
+  const [ID, setID] = useState('');
+
   const ajouterProduit = async () => {
     try {
       // Appel de l'API d'ajout de produit avec les données saisies par l'utilisateur
       const response = await axios.post('http://192.168.1.4:4000/ProduitBuvette/AjouterProduitBuvette', {
+        ID:ID,
         NomProduit: nomProduit,
         Prix: prix
       });
             Alert.alert('Produit ajouté', 'La demande d\'ajouter ce produit est en cours de traitement !');
 
       // Réinitialisation des champs après l'ajout du produit
+      setID('');
       setNomProduit('');
       setPrix('');
     } catch (error) {
@@ -55,6 +59,22 @@ const AjouterUnProduitBuvette = () => {
       <Text style={styles.ajouterUnProduit1}>{`Ajouter un produit `}</Text>
       <View style={[styles.ajouterUnProduitChild, styles.ajouterShadowBox]} />
       <View style={[styles.ajouterUnProduitItem, styles.ajouterShadowBox]} />
+      <View style={{ height: 25,
+    width: 313,
+    shadowOpacity: 1,
+    elevation: 15,
+    shadowRadius: 15,
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowColor: "rgba(0, 0, 0, 0.25)",
+    backgroundColor: Color.colorWhite,
+    borderRadius: Border.br_5xl,
+    left: 26,
+    position: "absolute",
+    top:255}} />
+
       <Text style={[styles.id, styles.idTypo]}>Prix :</Text>
       <Text style={[styles.nomProduit, styles.idTypo]}>Nom produit :</Text>
       <TextInput
@@ -68,6 +88,14 @@ const AjouterUnProduitBuvette = () => {
         placeholder="Entrez le Prix"
         onChangeText={setPrix} 
         value={prix} 
+      />
+            <Text style={{top:230,left:50}}>ID :</Text>
+
+         <TextInput
+        style={{top:240,left:50}} // Style de TextInput
+        placeholder="Entrez ID"
+        onChangeText={setID} 
+        value={ID} 
       />
        
       <Pressable
@@ -189,7 +217,7 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   ajouterUnProduit1: {
-    top: 227,
+    top: 205,
     fontSize: FontSize.size_lg,
     letterSpacing: 1.1,
     lineHeight: 21,
@@ -197,7 +225,7 @@ const styles = StyleSheet.create({
     textAlign: "left",
     fontFamily: FontFamily.poppinsSemiBold,
     fontWeight: "600",
-    left: 44,
+    left: 100,
     position: "absolute",
   },
   ajouterUnProduitChild: {
