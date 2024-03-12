@@ -1,13 +1,25 @@
-import * as React from "react";
-import { StyleSheet, View, Pressable, Text } from "react-native";
+import React, { useState } from 'react';
+import { StyleSheet, View, Pressable, Text,ScrollView,TextInput } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { FontSize, FontFamily, Color, Border } from "../../../GlobalStyles";
+import { RadioButton } from "react-native-paper";
+import Slider from "@react-native-community/slider";
 
 const CommanderBracelet = () => {
   const navigation = useNavigation();
+  const [value, setValue] = React.useState(0); // Initial value
+  const [NomEcole, setNomEcole] = useState('');
+  const [AdresseEcole, setAdresseEcole] = useState('');
 
+  
+  
+  const handleValueChange = (newValue) => {
+    setValue(newValue);
+    // Optional: Perform additional actions based on the new value
+  };
   return (
+    <ScrollView>
     <View style={styles.dashboardParent}>
       <View style={styles.dashboardParentChild} />
       <Pressable
@@ -36,82 +48,54 @@ const CommanderBracelet = () => {
         Bonjour , Linda said
       </Text>
       <View style={styles.dashboardParentInner} />
-      <Image
-        style={[styles.rectangleIcon, styles.unionIconLayout]}
-        contentFit="cover"
-        source={require("../../../assets/icon.png")}
-      />
-      <Pressable
-        style={styles.accepter}
-        onPress={() => navigation.navigate("DashboardParent")}
-      >
-        <Text style={styles.accepter1}>Accepter</Text>
-      </Pressable>
+      <Slider
+      style={{ width: 200, height: 40,top:420,right:-80 }} // Customize size
+      minimumValue={1}
+      maximumValue={10} // Adjust range
+      value={value} // Controlled component: set and update value
+      onValueChange={handleValueChange}
+      step={1} // Optional: define step for discrete values
+      thumbTintColor="#3498db" // Customize thumb color (optional)
+      minimumTrackTintColor="#007bff" // Customize track color (optional)
+    />
+    <Text style={{ marginLeft: 10,top:388,right:-275}}>{Math.round(value)}</Text>
+
+      
       <Text
         style={[styles.entrerLaQuantit, styles.choisirMthodesClr]}
       >{`Entrer la quantité `}</Text>
-      <View style={[styles.rectangleView, styles.notificationPosition]} />
-      <Text style={[styles.budgetFamiliale, styles.dtTypo]}>
-        Budget familiale
-      </Text>
-      <Text style={[styles.dt, styles.dtPosition]}>500 DT</Text>
-      <Text style={[styles.text1, styles.text1Typo]}>2154 2201 4850 7896</Text>
-      <Pressable
-        style={styles.component754}
-        onPress={() => navigation.navigate("AlimenterCarteParent")}
-      >
-        <View style={styles.component2499Child} />
-        <Image
-          style={[styles.unionIcon1, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union.png")}
-        />
-      </Pressable>
-      <Pressable
-        style={[styles.component832, styles.componentIconLayout]}
-        onPress={() => navigation.navigate("Stpage")}
-      >
-        <View style={styles.component2499Child} />
-        <Image
-          style={[styles.unionIcon2, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union.png")}
-        />
-      </Pressable>
-      <Pressable
-        style={[styles.component124, styles.bonjourLindaPosition]}
-        onPress={() => navigation.navigate("CentreDeNotifications")}
-      >
-        <View style={styles.component2499Child} />
-        <Image
-          style={[styles.unionIcon3, styles.unionIconLayout]}
-          contentFit="cover"
-          source={require("../../../assets/union.png")}
-        />
-      </Pressable>
-      <Text style={[styles.text2, styles.textLayout]}>-</Text>
-      <Text style={[styles.text3, styles.textLayout]}>+</Text>
-      <Text style={[styles.text4, styles.textLayout]}>3</Text>
-      <Text style={[styles.payerEnCash, styles.text1Typo]}>Payer en cash</Text>
-      <Image
-        style={[styles.component78Icon, styles.componentIconLayout]}
-        contentFit="cover"
-        source={require("../../../assets/icon.png")}
-      />
+     
+      
+      <TextInput placeholder="Entrer Nom d'école"
+              onChangeText={(text) => setNomEcole(text)}
+style={[styles.payerEnCash, styles.text1Typo]}></TextInput>
+<TextInput placeholder="Entrer Adresse d'école"
+              onChangeText={(text) => setAdresseEcole(text)}
+style={styles.payerEnCash1}></TextInput>
+      
       <Text style={[styles.choisirMthodes, styles.choisirMthodesClr]}>
-        Choisir méthodes
+       Remplir le formulaire
       </Text>
       <Image
         style={styles.ellipseIcon}
         contentFit="cover"
         source={require("../../../assets/ellipse-246.png")}
       />
+       <Pressable
+        style={[styles.rectanglePressable, styles.rectanglePressableBorder]}
+        onPress={{}}
+    >
+      <Text style={{color:"white",fontSize:20,left:20}}>
+        Commander
+      </Text>
+    </Pressable>
       <Image
-        style={[styles.component2500Icon, styles.componentIconLayout]}
+        style={styles.plusCircleIcon}
         contentFit="cover"
-        source={require("../../../assets/icon.png")}
+        source={require("../../../assets/pluscircle1.png")}
       />
-    </View>
+      
+    </View></ScrollView>
   );
 };
 
@@ -119,6 +103,19 @@ const styles = StyleSheet.create({
   componentIconLayout: {
     height: 24,
     width: 24,
+  },
+  rectanglePressable: {
+    top: 720,
+    left: 100,
+    width: "40%",
+    height: 35,
+  },
+  rectanglePressableBorder: {
+    borderWidth: 1,
+    borderColor: Color.colorMediumturquoise_100,
+    borderStyle: "solid",
+    backgroundColor: Color.colorMediumturquoise_200,
+    position: "absolute",
   },
   unionIconLayout: {
     maxHeight: "100%",
@@ -290,25 +287,7 @@ const styles = StyleSheet.create({
     bottom: "16.75%",
     left: "32.27%",
   },
-  accepter1: {
-    height: "7.14%",
-    width: "83.47%",
-    lineHeight: 25,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    color: Color.colorWhite,
-    letterSpacing: 1.1,
-    fontSize: FontSize.size_lg,
-    fontFamily: FontFamily.poppinsSemiBold,
-    fontWeight: "600",
-  },
-  accepter: {
-    left: "6.93%",
-    top: "77.96%",
-    position: "absolute",
-  },
+ 
   entrerLaQuantit: {
     top: 387,
     left: 99,
@@ -408,6 +387,15 @@ const styles = StyleSheet.create({
   },
   payerEnCash: {
     top: "69.21%",
+    left: "26.4%",
+    lineHeight: 18,
+    color: Color.colorGray_200,
+    letterSpacing: 0.8,
+    fontSize: FontSize.size_smi,
+    fontFamily: FontFamily.poppinsRegular,
+  },
+  payerEnCash1: {
+    top: "70.21%",
     left: "26.4%",
     lineHeight: 18,
     color: Color.colorGray_200,

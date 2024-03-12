@@ -38,20 +38,6 @@ const AutreAllergie = () => {
     }
   };
 
-  const handleClick = async (ID) => {
-    try {
-      const response = await axios.delete(`http://192.168.1.4:4000/allergieInterdit/DeleteallergieInterdit/${ID}`);
-      if (response.status === 200) {
-        // Mettre à jour la liste des allergies après la suppression
-        const updatedallergies = allergies.filter(allergie => allergie.ID !== ID);
-        setallergies(updatedallergies);
-      } else {
-        console.error('Erreur lors de la suppression du allergie :', response.statusText);
-      }
-    } catch (error) {
-      console.error('Erreur lors de la suppression du allergie :', error);
-    }
-  };
   
   return (
     <ScrollView>
@@ -59,7 +45,7 @@ const AutreAllergie = () => {
        {/*Partie de données de l'enfant */}
       {/*Modifier enfant */}
       <View style={[styles.component2500, styles.component2500Layout]}>
-        <View style={[styles.component2498Child, styles.textPosition]} />
+        <View style={[ styles.textPosition]} />
         <Image
           style={[styles.unionIcon6, styles.unionIconPosition]}
           contentFit="cover"

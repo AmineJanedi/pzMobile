@@ -55,23 +55,17 @@ router.delete('/DeleteProduitInterdit/:ID', (req, res) => {
 // Route pour ajouter des produits interdits**************************************************************
 router.post('/AjouterProduitsInterdits', async (req, res) => {
     try {
-        // Récupérer les données des produits sélectionnés depuis le corps de la requête
-        const produitsSelectionnes = req.body.produitsSelectionnes;
-
-        // Vérifier si des produits ont été sélectionnés
-        if (!produitsSelectionnes || produitsSelectionnes.length === 0) {
-            return res.status(400).send("Aucun produit sélectionné.");
+        const { produitsSelectionnes } = req.body;
+        // Validate if produitsSelectionnes is an array
+        if (!Array.isArray(produitsSelectionnes)) {
+            return res.status(400).json({ message: 'Invalid request. Expected array of selected products.' });
         }
-
-        // Créer de nouveaux enregistrements pour chaque produit sélectionné dans la table ProduitInterdit
-        const produitsInterdits = await ProduitsInterdit.create(produitsSelectionnes);
-
-        // Envoyer une réponse avec les produits interdits ajoutés
+        // Add selected products to ProduitInterdit model
+        const produitsInterdits = await produitsInterdits.create(produitsSelectionnes.map(produit => ({ NomProduit: produit })));
         res.status(200).json(produitsInterdits);
     } catch (error) {
-        // En cas d'erreur, envoyer une réponse avec le message d'erreur
-        console.error('Erreur lors de l\'ajout des produits interdits :', error);
-        res.status(500).send("Erreur lors de l'ajout des produits interdits.");
+        console.error('Error adding produits interdits:', error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 });
 

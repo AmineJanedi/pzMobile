@@ -2,7 +2,7 @@ const mongoose =require ('mongoose');
 
 const ProduitInterdit = mongoose.model('ProduitInterdit',{
     ID:{
-        type:Number
+        type:String
     },
     NomProduit :{
         type:String

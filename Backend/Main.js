@@ -9,6 +9,9 @@ const ProduitRoute = require('./Routes/ProduitRoute');
 const ProduitAjoutéBuvetteRoute=require('./Routes/ProduitAjoutéBuvetteRoute')
 const ProduitInterdit=require('./Routes/ProduitInterdit')
 const AllergieRoute=require('./Routes/AllergieRoute')
+const EnfantRoute=require('./Routes/Enfant')
+const { ajouterProduitsInterdits } = require('./Controllers/EnfantControllers'); // Importer le contrôleur
+
 
 app.use(cors());
 app.use(express.json());
@@ -23,6 +26,11 @@ app.use('/Produit', ProduitRoute);
 app.use('/ProduitBuvette', ProduitAjoutéBuvetteRoute);
 app.use('/ProduitInterdit',ProduitInterdit);
 app.use('/Allergies',AllergieRoute);
+app.use('/Enfant',EnfantRoute);
+
+
+// Associer le contrôleur à la route pour ajouter des produits interdits à un enfant
+app.post('/Enfant/:id/ajouterProduitsInterdits', ajouterProduitsInterdits);
 
 
 // Configuration de PORT

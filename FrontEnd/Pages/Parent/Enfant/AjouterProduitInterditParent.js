@@ -39,29 +39,28 @@ const AjouterProduitInterditParent = () => {
     };
     fetchProduits();
   }, []);
-  const ajouterProduitsInterdits = async () => {
-    try {
-      // Vérifiez s'il y a des produits sélectionnés
-      if (selectedProduit.length === 0) {
-        console.error("Aucun produit sélectionné.");
-        return;
-      }
+ 
+ // Fonction pour envoyer les données des produits interdits sélectionnés à l'API
+ const ajouterProduitsInterdits = async () => {
+  try {
+    // Envoyer les données des produits interdits sélectionnés à l'API
+    const response = await axios.post(`http://192.168.1.4:4000/Enfant/:id/produits-interdits`, {
+      produitsInterdits: selectedProduit
+    });
 
-      // Envoyez les données des produits sélectionnés à l'API
-      const response = await axios.post('http://192.168.1.4:4000/ProduitInterdit/AjouterProduitsInterdits', { produitsSelectionnes: selectedProduit });
-      
-      // Vérifiez si la requête a réussi
-      if (response.status === 200) {
-        console.log("Produits interdits ajoutés avec succès :", response.data);
-        // Réinitialisez l'état des produits sélectionnés après l'ajout
-        setSelectedProduit([]);
-      } else {
-        console.error("Erreur lors de l'ajout des produits interdits :", response.statusText);
-      }
-    } catch (error) {
-      console.error("Erreur lors de l'ajout des produits interdits :", error);
+    // Vérifier si la requête a réussi
+    if (response.status === 200) {
+      console.log("Produits interdits ajoutés avec succès :", response.data);
+      // Réinitialiser l'état des produits sélectionnés après l'ajout
+      setSelectedProduit([]);
+    } else {
+      console.error("Erreur lors de l'ajout des produits interdits :", response.statusText);
     }
-  };
+  } catch (error) {
+    console.error("Erreur lors de l'ajout des produits interdits :", error);
+  }
+};
+
   
   return (
     <ScrollView>

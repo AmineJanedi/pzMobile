@@ -53,6 +53,7 @@ const GererProduitInterdit = () => {
     }
   };
   
+  
   return (
     <ScrollView>
     <View style={styles.grerProduitInterdit}>
