@@ -1,25 +1,70 @@
 import { useState,useEffect } from 'react';
 import { Image } from "expo-image";
-import { StyleSheet, Text, View, Pressable,ScrollView,TextInput } from "react-native";
+import { StyleSheet, Text, View, Pressable,ScrollView,TextInput,Alert} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border } from "../../../GlobalStyles";
 import { RadioButton } from 'react-native-paper';
-
+import axios from 'axios';
 const Registration = () => {
   const navigation = useNavigation();
   const [selectedValue, setSelectedValue] = useState('Premium');
-  const onPress = () => {
-    if (selectedValue === "Premium") {
-      navigation.navigate("ComptePremium");
-    } else if (selectedValue === "Gratuit") {
-      navigation.navigate("Login");
+  const [nom, setNom] = useState('');
+  const [email, setEmail] = useState('');
+  const [motDePasse, setMotDePasse] = useState('');
+  const[confirmerMotPasse,setconfirmerMotPasse]=useState('');
+  const [cin, setCIN] = useState('');
+  const [passwordMatchError, setPasswordMatchError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const validateEmail = (email) => {
+    // Regular expression for email validation
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  const onPress = async () => {
+    // Validate email format
+    if (!validateEmail(email)) {
+      setEmailError('Veuillez entrer une adresse email valide');
+      return;
     } else {
-      // Afficher un message d'erreur
-      alert("Veuillez sélectionner un type de compte");
+      setEmailError('');
+    }
+
+    // Validate password match
+    if (motDePasse !== confirmerMotPasse) {
+      setPasswordMatchError('Les mots de passe ne correspondent pas');
+      return;
+    } else {
+      setPasswordMatchError('');
+    }
+
+    try {
+      // Make a POST request to the backend API to add a new parent
+      const response = await axios.post('http://192.168.1.4:4000/Parent/AjouterParents', {
+        nom,
+        email,
+        motDePasse,
+        cin,
+        typeCompte: selectedValue
+      });
+      
+      // Redirect to appropriate screen based on the selected account type
+      if (selectedValue === 'Premium') {
+        navigation.navigate('ComptePremium');
+      } else if (selectedValue === 'Gratuit') {
+        navigation.navigate('Login');
+      }
+    } catch (error) {
+      // Display an alert if there's an error
+      console.error('Error creating parent:', error);
+      if (error.response && error.response.status === 400 && error.response.data.message === 'Email already in use') {
+        Alert.alert('Error', 'This email is already in use. Please use a different email address.');
+      } else {
+        Alert.alert('Error', 'Email déja utilisé changer email');
+      }
     }
   };
-  
-
   return (
     <ScrollView> 
        <View style={styles.registration}>
@@ -36,31 +81,42 @@ const Registration = () => {
         Remplir ce formulaire avant de commencer
       </Text>
      
-    {/* Champs Nom */}
+   {/* Champs Nom */}
 <View style={[styles.input1, styles.inputLayout]}>
   <View style={[styles.inputChild, styles.childPosition]} />
   <TextInput
     style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
     placeholder="Entrer votre nom"
+    value={nom}
+    onChangeText={setNom}
   />
 </View>
 
-{/* Champs email */}
+{/* Champs mdp */}
 <View style={[styles.input, styles.inputLayout]}>
   <View style={[styles.inputChild, styles.childPosition]} />
   <TextInput
     style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
     placeholder="Confirmer mot de passe"
+    secureTextEntry={true}
+    value={motDePasse}
+    onChangeText={setMotDePasse}
+
   />
+ {passwordMatchError ? <Text style={styles.error}>{passwordMatchError}</Text> : null}
 </View>
 
-{/* Champs Mot de passe */}
+{/* Email */}
 <View style={[styles.input2, styles.inputLayout]}>
   <View style={[styles.inputChild, styles.childPosition]} />
   <TextInput
     style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
     placeholder="Entrer votre Email"
+    value={email}
+    onChangeText={setEmail}
   />
+   {emailError ? <Text style={styles.error}>{emailError}</Text> : null}
+
 </View>
 
 {/* Champs Confirmer mot de passe */}
@@ -70,6 +126,8 @@ const Registration = () => {
     style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
     placeholder="Entrer votre mot de passe"
     secureTextEntry={true} // Make password field hidden
+    value={confirmerMotPasse}
+    onChangeText={setconfirmerMotPasse}
   />
 </View>
 
@@ -79,6 +137,8 @@ const Registration = () => {
   <TextInput
     style={[styles.entrerVotreEmail, styles.entrerVotreEmailTypo]}
     placeholder="Entrer votre CIN"
+    value={cin}
+    onChangeText={setCIN}
   />
 </View>
  {/* Type de compte*/}
@@ -121,6 +181,11 @@ const styles = StyleSheet.create({
     width: "4.53%",
     height: "100%",
     overflow: "hidden",
+  },
+  error:{
+color:'red',
+left:21,
+top:-5
   },
   childPosition1: {
     right: "0%",
@@ -267,6 +332,7 @@ const styles = StyleSheet.create({
     left: "9.23%",
     color: Color.colorGray_200,
     textAlign: "left",
+    width:"100%"
   },
   input: {
     top: 411,

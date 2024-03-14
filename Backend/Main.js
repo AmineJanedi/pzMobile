@@ -4,12 +4,14 @@ const morgan = require('morgan');
 require('./Config/Connect');
 const app = express();
 const PORT = 4000;
-
+//Routes
 const ProduitRoute = require('./Routes/ProduitRoute');
 const ProduitAjoutéBuvetteRoute=require('./Routes/ProduitAjoutéBuvetteRoute')
 const ProduitInterdit=require('./Routes/ProduitInterdit')
 const AllergieRoute=require('./Routes/AllergieRoute')
 const EnfantRoute=require('./Routes/Enfant')
+const ParentRoute=require('./Routes/Parent')
+//Controllers
 const { ajouterProduitsInterdits } = require('./Controllers/EnfantControllers'); // Importer le contrôleur
 
 
@@ -27,6 +29,7 @@ app.use('/ProduitBuvette', ProduitAjoutéBuvetteRoute);
 app.use('/ProduitInterdit',ProduitInterdit);
 app.use('/Allergies',AllergieRoute);
 app.use('/Enfant',EnfantRoute);
+app.use('/Parent',ParentRoute);
 
 
 // Associer le contrôleur à la route pour ajouter des produits interdits à un enfant

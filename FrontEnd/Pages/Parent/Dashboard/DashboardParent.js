@@ -1,11 +1,41 @@
-import * as React from "react";
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, Pressable,ScrollView,Button } from "react-native";
 import { Image } from "expo-image";
 import { useNavigation } from "@react-navigation/native";
 import { Color, FontSize, FontFamily, Border } from "../../../GlobalStyles";
+import axios from 'axios';
+const DashboardParent = ({ route }) => {
+  const [parentName, setParentName] = useState('');
+  const [typeCompte, settypeCompte] = useState('');
 
-const DashboardParent = () => {
   const navigation = useNavigation();
+
+  useEffect(() => {
+    // Fonction pour récupérer le nom du parent à partir de son ID
+    const fetchParentName = async () => {
+      try {
+        // Récupérer l'ID du parent de la route
+        const { id } = route.params;
+
+        // Faire une requête à l'API pour obtenir les détails du parent
+        const response = await axios.get(`http://192.168.1.4:4000/Parent/${id}`);
+
+        // Extraire le nom du parent de la réponse
+        const { nom,typeCompte } = response.data.parent;
+
+        // Mettre à jour le nom du parent dans l'état local
+        setParentName(nom);
+        settypeCompte(typeCompte);
+
+      } catch (error) {
+        console.error('Error fetching parent name:', error);
+      }
+    };
+
+    // Appeler la fonction pour récupérer le nom du parent
+    fetchParentName();
+  }, [route]);
+
 
   return (
     <ScrollView>
@@ -47,17 +77,16 @@ const DashboardParent = () => {
       />
 
       <Text style={[styles.bonjourLinda, styles.bonjourLindaClr]}>
-        Bonjour , Linda said
+        Bonjour , {parentName} 
       </Text>
+      <Text style={{top:210,color:'white'}}> Type compte : {typeCompte}</Text>
       {/*Budget familiale */}
       <View style={styles.dashboardParentChild1} />
       <Text style={[styles.budgetFamiliale, styles.dtLayout]}>
         Budget familiale
       </Text>
       <Text style={[styles.dt, styles.dtPosition]}>500 DT</Text>
-      <Text style={[styles.ecolePrivAl, styles.dtPosition]}>
-        Ecole privé al yassmine,La Marsa
-      </Text>
+      
      
       <View style={[styles.component754, styles.component754Position]}>
         <View style={styles.component2499Child} />
@@ -75,7 +104,7 @@ const DashboardParent = () => {
       </View>
       <View style={styles.buttonContainer}>
   <Pressable
-    style={{backgroundColor:Color.colorMediumturquoise_200,width:110,height:35,top:326,left:240,borderTopLeftRadius:15,borderBottomRightRadius:15}}
+    style={{backgroundColor:Color.colorMediumturquoise_200,width:110,height:35,top:303,left:240,borderTopLeftRadius:15,borderBottomRightRadius:15}}
     onPress={() => navigation.navigate("CommanderBracelet")}
   >
     <Text style={{color:'white',marginLeft:14}}>Commander un bracelet</Text>
@@ -299,12 +328,12 @@ const styles = StyleSheet.create({
     position: "absolute",
   },
   bonjourLinda: {
-    top: 190,
+    top: 170,
     lineHeight: 21,
     letterSpacing: 1.1,
     fontSize: FontSize.size_lg,
     color: Color.colorWhite,
-    left: 80,
+    left: 95,
     fontWeight: "600",
     position: "absolute",
   },
@@ -461,29 +490,21 @@ const styles = StyleSheet.create({
   budgetFamiliale: {
     left: 46,
     width: 114,
-    top: 260,
+    top: 270,
     position: "absolute",
     height: 17,
     color: Color.colorWhite,
     textAlign: "left",
   },
   dt: {
-    top: 257,
+    top: 268,
     height: 18,
     lineHeight: 17,
     letterSpacing: 0.9,
     fontSize: FontSize.size_mini,
     width: 92,
   },
-  ecolePrivAl: {
-    top: 277,
-    fontSize: FontSize.size_4xs,
-    letterSpacing: 0.5,
-    lineHeight: 10,
-    width: 95,
-    height: 21,
-    left: 220,
-  },
+  
   rectanglePressable: {
     left: 31,
     height: 95,

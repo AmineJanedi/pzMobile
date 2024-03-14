@@ -4,14 +4,35 @@ import { StyleSheet, Text,TextInput, View, Pressable,ScrollView} from "react-nat
 import { useNavigation } from "@react-navigation/native";
 import { FontFamily, FontSize, Color, Border } from "../../../GlobalStyles";
 import { useState } from 'react';
-
+import axios from "axios";
 
 const Login = () => {
   const navigation = useNavigation();
   const [Email, setEmail] = useState('');
   const [Password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
+  const handleSignIn = async () => {
+    try {
+      const response = await axios.post('http://192.168.1.4:4000/Parent/login', {
+        email: Email,
+        motDePasse: Password
+      });
+  
+      console.log("Response:", response.data); // Log response from server
+  
+      // Extraire l'ID du parent de la réponse
+    const parentId = response.data.parent._id;
 
+    // Naviguer vers le tableau de bord du parent avec l'ID comme paramètre
+    navigation.navigate("DashboardParent", { id: parentId });
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+      setErrorMessage('Invalid email or password');
+    }
+  };
+  
+  
   return (
     <ScrollView>
     <View style={styles.login}>
@@ -28,17 +49,17 @@ const Login = () => {
         Mot de passe oublié ?
       </Text>
       <Pressable
-        style={[styles.button, styles.buttonPosition]}
-        onPress={() => navigation.navigate("DashboardParent")}
-      >
-        <View style={[styles.buttonChild, styles.childPosition]} />
-        <Pressable
-          style={styles.childPosition}
-          onPress={() => navigation.navigate("DashboardParent")}
+          style={[styles.button, styles.buttonPosition]}
+          onPress={handleSignIn}
         >
-          <Text style={[styles.signIn1, styles.signIn1Typo]}>Sign In</Text>
-        </Pressable>
-      </Pressable>
+          <View style={[styles.buttonChild, styles.childPosition]} />
+          <Pressable
+            style={styles.childPosition}
+            onPress={handleSignIn}
+          >
+            <Text style={[styles.signIn1, styles.signIn1Typo]}>Sign In</Text>
+          </Pressable>
+          </Pressable>
       <View style={[styles.input, styles.inputLayout]}>
       <View style={[styles.inputChild, styles.childPosition]} />
       {/* TextInput pour la saisie de texte */}
@@ -61,6 +82,9 @@ const Login = () => {
         value={Password}
         style={[styles.entrerVotreEmail, styles.textTypo]}
       />
+       {errorMessage ? (
+          <Text style={styles.errorMessage}>{errorMessage}</Text>
+        ) : null}
       </View>
       <Image
         style={styles.undrawMyNotificationsRjej1Icon}
@@ -78,6 +102,11 @@ const styles = StyleSheet.create({
     width: 325,
     left: 25,
     position: "absolute",
+  },
+  errorMessage:{
+color:'red',
+top:-100,
+left:15
   },
   iconLayout: {
     maxHeight: "100%",
@@ -222,6 +251,7 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
     fontSize: FontSize.size_smi,
     textAlign: "left",
+    width:"100%"
   },
   input: {
     top: 468,

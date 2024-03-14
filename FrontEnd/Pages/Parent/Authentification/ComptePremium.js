@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import { Image } from "expo-image";
 import { StyleSheet, View, Pressable, Text,ScrollView,TextInput} from "react-native";
 import { useNavigation } from "@react-navigation/native";
@@ -6,21 +6,47 @@ import { FontFamily, FontSize, Color, Border } from "../../../GlobalStyles";
 
 const ComptePremium = () => {
   const navigation = useNavigation();
+  const [Nom, setNom] = useState('');
+  const[Numéro,setNuméro]=useState('');
+  const[Exp,setExp]=useState('');
+  const[Cvv,setCvv]=useState('');
+  const[Montant,setMontant]=useState('');
+
+
 
   return (
     <ScrollView>
     <View style={styles.comptePremium}>
+      
       <Image
         style={styles.shapeIcon}
         contentFit="cover"
         source={require("../../../assets/shape1.png")}
       />
-      
-   
+      {/*Rectangle Virement bancaire */}
       <View style={styles.comptePremiumChild} />
+      {/*Nom */}
       <Text style={[styles.nom, styles.nomTypo]}>{`Nom  `}</Text>
+      <View style={[styles.comptePremiumItem, styles.compteShadowBox]} />
+      <TextInput 
+        placeholder="Entrer votre nom"
+        onChangeText={(text) => {
+          setNom(text);
+        }}
+        value={Nom}
+        style={[styles.lindaSaied, styles.nomTypo]}/>
+        {/*Numéro de carte */}
       <Text style={[styles.numroDeLa, styles.nomTypo]}>Numéro de la carte</Text>
-      <Text style={[styles.expDate, styles.cvvTypo]}>Exp Date</Text>
+      <View style={[styles.comptePremiumInner, styles.compteShadowBox]} />
+      <TextInput 
+        placeholder="XXXX XXXX XXXX XXXX"
+        inputMode="numeric"
+        maxLength={16}
+        onChangeText={(text) => {
+          setNuméro(text);
+        }}
+        value={Numéro}
+      style={[styles.comptePremiumInner1, styles.nomTypo1]}      />
       <Image
         style={styles.component78Icon}
         contentFit="cover"
@@ -29,16 +55,37 @@ const ComptePremium = () => {
       <Text style={[styles.virementBancaire, styles.virementBancaireTypo]}>
         Virement bancaire
       </Text>
-      <View style={[styles.comptePremiumItem, styles.compteShadowBox]} />
-      <View style={[styles.comptePremiumInner, styles.compteShadowBox]} />
+     
+     {/*Exp date */}
+     <Text style={[styles.expDate, styles.cvvTypo]}>Exp Date</Text>
       <View style={[styles.rectangleView, styles.rectangleViewShadowBox]} />
+      <TextInput
+            style={{top:595,left:60,color:'white'}} // Style de TextInput
+            placeholder="MM/AA"
+            maxLength={5}
+            keyboardType='numbers-and-punctuation'
+            onChangeText={(text) => {
+              setExp(text);
+            }}
+            value={Exp}
+          />
+          {/*CVV */}
       <Text style={[styles.cvv, styles.cvvTypo]}>CVV</Text>
       <View
         style={[styles.comptePremiumChild1, styles.rectangleViewShadowBox]}
       />
-      <Text style={[styles.lindaSaied, styles.nomTypo]}>Linda Saied</Text>
+      <TextInput
+            style={{top:580,left:220,color:'white'}} // Style de TextInput
+            placeholder="XXX"
+            maxLength={3}
+            keyboardType='decimal-pad'
+            onChangeText={(text) => {
+              setCvv(text);
+            }}
+            value={Cvv}
+          />
       <Text style={[styles.payerVotreCompte, styles.virementBancaireTypo]}>
-        Payer votre compte Premium
+        Activer votre compte Premium avec 20 DT seulement !
       </Text>
       <Text style={styles.avecLaVersionContainer}>
         <Text
@@ -53,6 +100,43 @@ Savoir le niveaux d’oxygéne de votre enfant!
 Savoir la température de votre enfant !
 Consulter l’intérpretation d’un médcin AI`}</Text>
       </Text>
+      <View
+          style={{top: 665,
+            left: 55, height: 32,
+            width: 227,
+            shadowOpacity: 1,
+            elevation: 15,
+            shadowRadius: 15,
+            shadowOffset: {
+              width: 0,
+              height: 4,
+            },
+            
+            shadowColor: "rgba(0, 0, 0, 0.25)",
+            borderRadius: Border.br_5xl,
+            backgroundColor: Color.colorMediumturquoise_200,
+            position: "absolute",}}
+        />
+            <TextInput
+            style={{top:639,left:75,color:'white'}} // Style de TextInput
+            placeholder="10 DT"
+            maxLength={2}
+            inputMode='numeric'
+            onChangeText={(text) => {
+              setMontant(text); 
+            }}
+            value={Montant}
+          />
+    <Text style={{left: "15.67%",
+     top: 640,
+      color: Color.colorMediumturquoise_200,
+      fontFamily: FontFamily.poppinsRegular,
+      lineHeight: 18,
+      letterSpacing: 0.8,
+      fontSize: FontSize.size_smi,
+      textAlign: "left",
+      position: "absolute",}}>Montant</Text>
+       
          {/*Bouton Payer*/}
          <View style={styles.button}>
         <View style={styles.buttonChild} />
@@ -63,6 +147,7 @@ Consulter l’intérpretation d’un médcin AI`}</Text>
           <Text style={styles.payer}>Payer</Text>
         </Pressable>
       </View>
+      
     </View></ScrollView>
   );
 };
@@ -78,6 +163,14 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.poppinsRegular,
     letterSpacing: 0.8,
     fontSize: FontSize.size_smi,
+    position: "absolute",
+  },
+  nomTypo1: {
+    textAlign: "left",
+    fontFamily: FontFamily.poppinsRegular,
+    letterSpacing: 0.8,
+    fontSize: FontSize.size_smi,
+    color:'white',
     position: "absolute",
   },
   cvvTypo: {
@@ -192,10 +285,10 @@ const styles = StyleSheet.create({
     top: "0%",
   },
   button: {
-    top: 681,
+    top: 725,
     left: 68,
     width: 222,
-    height: 62,
+    height: 40,
     position: "absolute",
   },
   comptePremiumChild: {
@@ -203,7 +296,7 @@ const styles = StyleSheet.create({
     left: 26,
     backgroundColor: Color.colorWhite,
     width: 323,
-    height: 311,
+    height: 365,
     shadowOpacity: 1,
     elevation: 15,
     shadowRadius: 15,
@@ -255,6 +348,10 @@ const styles = StyleSheet.create({
     top: 517,
     left: 55,
   },
+  comptePremiumInner1: {
+    top: 525,
+    left: 65,
+  },
   rectangleView: {
     left: 55,
   },
@@ -272,10 +369,11 @@ const styles = StyleSheet.create({
     color: Color.colorWhite,
   },
   payerVotreCompte: {
-    top: 177,
-    left: 30,
-    fontSize: 19,
+    top: 160,
+    left: 45,
+    fontSize: 17,
     lineHeight: 22,
+    width:300
   },
   avecLaVersion: {
     fontFamily: FontFamily.poppinsSemiBold,
